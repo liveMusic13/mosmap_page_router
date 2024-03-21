@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-// import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useSelector } from 'react-redux';
 
 import { IDataObjectsInMap } from '@/types/slice.types';
@@ -9,6 +8,7 @@ import { RootState } from '@/store/store';
 
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import CanvasMarkersLayer from './CanvasMarkersLayer';
 import FlyToLocation from './FlyToLocation';
 import RenderMarkers from './RenderMarkers';
@@ -65,11 +65,11 @@ export function CustomMap() {
 				dataObjectsInMap.points.clastering === 0 ? (
 					<RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
 				) : (
-					// <MarkerClusterGroup chunkedLoading={true}>
-					// 	<RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
-					// </MarkerClusterGroup>
+					<MarkerClusterGroup chunkedLoading={true}>
+						<RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
+					</MarkerClusterGroup>
 					
-					<RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
+					// <RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
 		
 				)
 			) : (
