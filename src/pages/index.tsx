@@ -72,7 +72,7 @@ export default function Home({data, maps}:any) {
 }
 
 export const getServerSideProps = async ({ query }:any) => {
-	console.log(query.map)
+
 if (query.map) {
 	const response = await fetch(`https://app.mosmap.ru/api/get_objects.php?map=${query.map}`);
 	const data = await response.json()

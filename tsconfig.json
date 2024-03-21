@@ -17,12 +17,6 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"awesomeTypescriptLoaderOptions": {
-		"useWebpackText": true,
-		"useTranspileModule": true,
-		"doTypeCheck": true,
-		"forkChecker": true
-	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules"]
 }
