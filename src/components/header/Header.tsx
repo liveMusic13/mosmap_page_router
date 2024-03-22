@@ -14,7 +14,7 @@ export function Header({data}:any) {
 	const dataObjectsInMap = useSelector(
 		(state: RootState) => state.dataObjectsInMap,
 	);
-
+	
 	return (
 		<header className={styles.header}>
 			<div className={styles.map__buttons}>
@@ -31,7 +31,7 @@ export function Header({data}:any) {
 			</div>
 			<div className={styles.settings__buttons}>
 				{arrayNumSettingIcons.map(icon => {
-					if (data['all-points'] >= 6000 && icon.id === 7) {
+					if (dataObjectsInMap.points['all-points'] >= 6000 && icon.id === 7) {
 						return null;
 					} else {
 						return <Button key={icon.id} icon={icon} />;

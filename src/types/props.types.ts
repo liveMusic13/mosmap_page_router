@@ -41,6 +41,7 @@ export interface IAllObjects {
 	isDisplay?: boolean;
 	isMobile?: boolean;
 	data?:any
+	initialLoad?:any
 }
 
 export interface IInput {

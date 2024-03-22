@@ -45,7 +45,7 @@ export function Content({data}:any) {
 			{viewSettings.isViewFilters && <Filters isDisplay={isDisplay} />}
 			{viewSettings.isObjectInfo && <ObjectInfo isDisplay={isDisplay} />}
 			{viewSettings.isViewObjects &&
-				data['all-points'] <= 6000 && (
+				dataObjectsInMap.points['all-points'] <= 6000 && (
 					<AllObjects isDisplay={isDisplay} data={data} />
 				)}
 			<div className={styles.block__map}>

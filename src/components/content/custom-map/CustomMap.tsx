@@ -68,9 +68,6 @@ export function CustomMap() {
 					<MarkerClusterGroup chunkedLoading={true}>
 						<RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
 					</MarkerClusterGroup>
-					
-					// <RenderMarkers isMobile={isMobile} zoomLevel={zoomLevel} />
-		
 				)
 			) : (
 				<CanvasMarkersLayer
