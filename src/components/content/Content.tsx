@@ -9,6 +9,7 @@ import { actions as viewSettingsAction } from '@/store/view-settings/viewSetting
 
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 
+import { IMarker } from '@/types/slice.types';
 import styles from './Content.module.scss';
 import { AllObjects } from './all-objects/AllObjects';
 import Filters from './filters/Filters';
@@ -48,6 +49,17 @@ export function Content({data}:any) {
 				dataObjectsInMap.points['all-points'] <= 6000 && (
 					<AllObjects isDisplay={isDisplay} data={data} />
 				)}
+				<div style={{opacity:'0', position: 'absolute', zIndex: '-1'}}>
+				{data.points.map((elem: IMarker) => {
+						return (
+							<div
+								key={elem.id}
+								className={styles.object}
+							>
+								<p>{elem.name}</p>
+							</div>
+						);
+					})}</div>
 			<div className={styles.block__map}>
 				<DynamicMapCustom />
 				<div className={styles.logo__image}>

@@ -4,7 +4,6 @@ import { SettingsMap } from '@/components/settings-map/SettingsMap';
 import { useInitRequest } from '@/hooks/useInitRequest';
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 import { actions as dataFiltersAction } from '@/store/data-filters/dataFilters.slice';
-import { actions as dataObjectsInMapAction } from '@/store/data-objects-in-map/dataObjectsInMap.slice';
 import { RootState } from '@/store/store';
 import { actions as userMapAction } from '@/store/user-map/userMap.slice';
 import { actions as viewSettingsActions } from '@/store/view-settings/viewSettings.slice';
@@ -44,9 +43,9 @@ export default function Home({data, dataFilters}:any) {
 		if (!map) {
 			push(`?map=7`);
 		} else {
-			getObject();
+			getObject();//HELP: НУЖЕН ДЛЯ ТОГО ЧТОБЫ ЗАПИСЬ С БЭКА НЕ ПЕРЕБИВАЛА ДАННЫЕ С РЕДАКСА И ПРОИСХОДИЛА ФИЛЬТРАЦИЯ СПИСКА
 			// getFilters();
-			dispatch(dataObjectsInMapAction.addDataObjectsInMap(data));
+			// dispatch( dataObjectsInMapAction.addDataObjectsInMap(data));
 			dispatch(dataFiltersAction.addFilters(dataFilters));
 		}
 	}, [map, initApp]);

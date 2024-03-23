@@ -36,6 +36,32 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 
 	const { width } = useWindowDimensions();
 
+	// const [initialInClient, setInitialInClient] = useState(0)
+
+// const router = useRouter();
+// const { query } = router;
+
+// 	const test = async()=> {
+// 		console.log('adresFilterString.srcRequest', adresFilterString.srcRequest)
+// 		const response = await $axios.get(
+// 			`/api/get_objects.php${adresFilterString.srcRequest}`,
+// 		);
+// 		dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
+// 	}
+
+// 	useEffect(()=> {
+// 		if (initialInClient === 0) {
+// 			const timeoutId = setTimeout(()=>{
+// 				debugger
+// 				test()
+// 				setInitialInClient(prev => prev + 1)
+
+// 			}, 3000)
+
+// 			return ()=> clearTimeout(timeoutId)
+// 		}
+// 	},[])
+
 	const getFiltersObject = async () => {
 		try {
 			dispatch(viewSettingsActions.activeLoading(''));

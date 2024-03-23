@@ -33,7 +33,7 @@ export const AllObjects: FC<IAllObjects> = ({ isDisplay, data }) => {
 	const [isMobile, setIsMobile] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const { width } = useWindowDimensions();
-	const [initialInClient, setInitialInClient] = useState(false)
+	
 
 	useEffect(() => {
 		if (width && width <= 767.98) {
@@ -66,21 +66,11 @@ export const AllObjects: FC<IAllObjects> = ({ isDisplay, data }) => {
 // const router = useRouter();
 // const { query } = router;
 
-
+// const [initialInClient,setInitialInClient] = useState(false)
 
 // if (!initialInClient) {
-// 	// objects = data.points;
-// 	for (let key in query) {
-		
-// 		if (key !== 'map') {
-// 			objects = dataObjectsInMap?.points?.points;
-			
+// 	objects = data.points;
 	
-// 		} else {
-// 			objects = data.points;
-	
-// 		}
-// 	}
 // } else {
 // 	objects = dataObjectsInMap?.points?.points;
 // }
@@ -88,6 +78,25 @@ export const AllObjects: FC<IAllObjects> = ({ isDisplay, data }) => {
 // useEffect(()=> {
 // 	setInitialInClient(true)
 // }, [initialInClient])
+// const adresFilterString = useSelector(
+// 	(state: RootState) => state.adresFilterString,
+// );
+// const test = async()=> {
+// 	console.log(adresFilterString.srcRequest)
+// 	if (adresFilterString.srcRequest === '') {
+// 		const response = await $axios.get(`/api/get_objects.php?map=${query.map}`);
+// 		dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
+// 	} else {
+// 		const response = await $axios.get(
+// 			`/api/get_objects.php${adresFilterString.srcRequest}`,
+// 		);
+// 		dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
+// 	}
+// }
+
+// useEffect(()=> {
+// 	test()
+// },[])
 
 	const objects = dataObjectsInMap?.points?.points;
 	// const objects = data.points;
@@ -131,7 +140,7 @@ export const AllObjects: FC<IAllObjects> = ({ isDisplay, data }) => {
 	if (!(viewSettings.isObjectInfo || viewSettings.isViewFilters)) {
 		style.left = '0';
 	}
-	
+
 	return (
 		<div className={styles.block__allObjects} style={style}>
 			<div className={styles.block__title}>
@@ -194,19 +203,6 @@ export const AllObjects: FC<IAllObjects> = ({ isDisplay, data }) => {
 					})
 				)}
 			</div>
-			<div style={{opacity:'0', position: 'absolute', zIndex: '-1'}}>{data.points.map((elem: IMarker, index: number) => {
-						return (
-							<div
-								ref={objectRefs.current[index]}
-								key={elem.id}
-								className={styles.object}
-								
-								onClick={getInfoObject(elem)}
-							>
-								<p>{elem.name}</p>
-							</div>
-						);
-					})}</div>
 		</div>
 	);
 };

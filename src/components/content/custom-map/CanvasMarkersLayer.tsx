@@ -84,44 +84,100 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 			polygonsRef.current = [];
 		}
 
-		for (let marker of markersData) {
-			let mapObject;
+	
 
-			if (zoomLevels >= 16 && marker.polygon && marker.polygon.length > 0) {
-				mapObject = new L.Polygon(marker.polygon, {
-					color:
-						dataObjectInfo.id === marker.id
-							? 'black'
-							: ARGBtoHEX(marker.color ? marker.color : '000'),
-					weight: dataObjectInfo.id === marker.id ? 6 : 3,
-				}).addTo(map);
-
-				mapObject.on('click', getInfoObject(marker));
-				mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
-				polygonsRef.current.push(mapObject);
+			for (let marker of markersData) {
+				let mapObject;
+	
+				if (zoomLevels >= 16 && marker.polygon && marker.polygon.length > 0) {
+					mapObject = new L.Polygon(marker.polygon, {
+						color:
+							dataObjectInfo.id === marker.id
+								? 'black'
+								: ARGBtoHEX(marker.color ? marker.color : '000'),
+						weight: dataObjectInfo.id === marker.id ? 6 : 3,
+					}).addTo(map);
+	
+					mapObject.on('click', getInfoObject(marker));
+					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
+					polygonsRef.current.push(mapObject);
+				}
 			}
-		}
-
-		for (let marker of markersData) {
-			//HELP: ОТРИСОВКА КРУЖКОВ
-			let mapObject;
-			const zoomLevelsForCircle = map.getZoom(); //HELP: ОТДЕЛЬНО ПОЛУЧАЕМ УРОВЕНЬ ЗУМА, ПОТОМУ ЧТО НЕКОРРЕКТНО ОТОБРАЖАЕТ ЕСЛИ ИСПОЛЬЗОВАТЬ ОБЩИЙ ЗУМ, ОБЪЯВЛЕННЫЙ ВЫШЕ
-
-			if (zoomLevelsForCircle <= 13) {
-				mapObject = new L.CircleMarker(marker.crd ? marker.crd : [0, 0], {
-					renderer: canvasLayerRef.current,
-					radius: 5,
-					color:
-						dataObjectInfo.id === marker.id
-							? 'black'
-							: ARGBtoHEX(marker.color ? marker.color : '000'),
-				}).addTo(map);
-
-				mapObject.on('click', getInfoObject(marker));
-				mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
+	
+			for (let marker of markersData) {
+				//HELP: ОТРИСОВКА КРУЖКОВ
+				let mapObject;
+				const zoomLevelsForCircle = map.getZoom(); //HELP: ОТДЕЛЬНО ПОЛУЧАЕМ УРОВЕНЬ ЗУМА, ПОТОМУ ЧТО НЕКОРРЕКТНО ОТОБРАЖАЕТ ЕСЛИ ИСПОЛЬЗОВАТЬ ОБЩИЙ ЗУМ, ОБЪЯВЛЕННЫЙ ВЫШЕ
+	
+				if (zoomLevelsForCircle <= 13) {
+					mapObject = new L.CircleMarker(marker.crd ? marker.crd : [0, 0], {
+						renderer: canvasLayerRef.current,
+						radius: 5,
+						color:
+							dataObjectInfo.id === marker.id
+								? 'black'
+								: ARGBtoHEX(marker.color ? marker.color : '000'),
+					}).addTo(map);
+	
+					mapObject.on('click', getInfoObject(marker));
+					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
+				}
+	
+				if (dataObjectInfo.id === marker.id && zoomLevelsForCircle < 16) {
+					const targetIcon = L.icon({
+						iconUrl: '../images/icons/target.svg',
+						iconSize: [60, 58],
+						iconAnchor: [22, 21],
+					});
+	
+					let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
+						icon: targetIcon,
+					}).addTo(map);
+					iconsRef.current.push(targetMapObject);
+	
+					if (targetMarker.current) {
+						map.removeLayer(targetMarker.current);
+						targetMarker.current = null;
+					} else {
+						targetMarker.current = targetMapObject;
+					}
+				}
 			}
+		
 
-			if (dataObjectInfo.id === marker.id && zoomLevelsForCircle < 16) {
+
+		function handleMoveEndZoomEnd() {
+			let bounds = map.getBounds();
+			const zoomLevelForIcon = map.getZoom();
+
+
+
+	for (let marker of markersData) {
+		if (
+			(zoomLevelForIcon > 13 &&
+				zoomLevelForIcon < 16 &&
+				bounds.contains(marker.crd ? marker.crd : [0, 0])) ||
+			(zoomLevelForIcon > 15 && //HELP: СТАВЛЮ 15 ХОТЯ СРАБАТЫВАЕТ НА 16. СКОРЕЕ ВСЕГО ПОТОМУ ЧТО НЕПРАВИЛЬНО ОТРАБАТЫВАЕТ УРОВЕНЬ ЗУМА, ПОЭТОМУ ДЛЯ ПРАВИЛЬНОЙ РАБОТЫ МЕНЯЮ НА 15.
+				(!marker.polygon || marker.polygon.length === 0) &&
+				bounds.contains(marker.crd ? marker.crd : [0, 0]))
+		) {
+			let svg = getIconForMarker(marker); //HELP: ПОЛУЧАЕМ МАРКЕР
+			let encodedSvg = encodeURIComponent(svg); //HELP: КОНВЕРТИРУЕМ В ССЫЛКУ
+			let dataUrl = 'data:image/svg+xml,' + encodedSvg; //HELP: ДОБАВЛЯЕМ К НЕМУ DATA И ТЕПЕРЬ ЭТО ССЫЛКА НА КАРТИНКУ
+
+			const icon = L.icon({
+				//HELP: СОЗДАЕМ ИКОНКУ
+				iconUrl: dataUrl,
+				iconSize: [20, 18],
+				iconAnchor: [10, 9],
+			});
+
+			let mapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
+				icon: icon,
+			}).addTo(map);
+			iconsRef.current.push(mapObject);
+
+			if (dataObjectInfo.id === marker.id) {
 				const targetIcon = L.icon({
 					iconUrl: '../images/icons/target.svg',
 					iconSize: [60, 58],
@@ -140,61 +196,12 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 					targetMarker.current = targetMapObject;
 				}
 			}
+
+			mapObject.on('click', getInfoObject(marker));
+			mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 		}
+	}
 
-		function handleMoveEndZoomEnd() {
-			let bounds = map.getBounds();
-			const zoomLevelForIcon = map.getZoom();
-
-			for (let marker of markersData) {
-				if (
-					(zoomLevelForIcon > 13 &&
-						zoomLevelForIcon < 16 &&
-						bounds.contains(marker.crd ? marker.crd : [0, 0])) ||
-					(zoomLevelForIcon > 15 && //HELP: СТАВЛЮ 15 ХОТЯ СРАБАТЫВАЕТ НА 16. СКОРЕЕ ВСЕГО ПОТОМУ ЧТО НЕПРАВИЛЬНО ОТРАБАТЫВАЕТ УРОВЕНЬ ЗУМА, ПОЭТОМУ ДЛЯ ПРАВИЛЬНОЙ РАБОТЫ МЕНЯЮ НА 15.
-						(!marker.polygon || marker.polygon.length === 0) &&
-						bounds.contains(marker.crd ? marker.crd : [0, 0]))
-				) {
-					let svg = getIconForMarker(marker); //HELP: ПОЛУЧАЕМ МАРКЕР
-					let encodedSvg = encodeURIComponent(svg); //HELP: КОНВЕРТИРУЕМ В ССЫЛКУ
-					let dataUrl = 'data:image/svg+xml,' + encodedSvg; //HELP: ДОБАВЛЯЕМ К НЕМУ DATA И ТЕПЕРЬ ЭТО ССЫЛКА НА КАРТИНКУ
-
-					const icon = L.icon({
-						//HELP: СОЗДАЕМ ИКОНКУ
-						iconUrl: dataUrl,
-						iconSize: [20, 18],
-						iconAnchor: [10, 9],
-					});
-
-					let mapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
-						icon: icon,
-					}).addTo(map);
-					iconsRef.current.push(mapObject);
-
-					if (dataObjectInfo.id === marker.id) {
-						const targetIcon = L.icon({
-							iconUrl: '../images/icons/target.svg',
-							iconSize: [60, 58],
-							iconAnchor: [22, 21],
-						});
-
-						let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
-							icon: targetIcon,
-						}).addTo(map);
-						iconsRef.current.push(targetMapObject);
-
-						if (targetMarker.current) {
-							map.removeLayer(targetMarker.current);
-							targetMarker.current = null;
-						} else {
-							targetMarker.current = targetMapObject;
-						}
-					}
-
-					mapObject.on('click', getInfoObject(marker));
-					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
-				}
-			}
 			setTimeout(() => {
 				map.invalidateSize();
 			}, 2000);
