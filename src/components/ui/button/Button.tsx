@@ -37,6 +37,7 @@ const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
 	return (
 		<button
 			className={styles.icon__button}
+			disabled={elem?.crd === null}
 			onClick={() => {
 				if (width && width <= 767.98) {
 					if (icon.id === 6) {
