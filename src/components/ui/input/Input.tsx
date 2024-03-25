@@ -12,6 +12,7 @@ import styles from './Input.module.scss';
 
 const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 	const { map } = useSelector((state: RootState) => state.userMap);
+	const { srcRequest } = useSelector((state: RootState) => state.adresFilterString);
 	const [test, setTest] = useState<string>('');
 	const [isInputValid, setIsInputValid] = useState<boolean>(true);
 	const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 		}
 
 		router.push('?' + searchParams.toString());
-	}, 500);
+	}, 100);
 
 	const onChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -61,6 +62,8 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 	useEffect(() => {
 		dispatch(adresFilterStringAction.addGetParams(window.location.search));
 	}, [searchParams]); //HELP: ВМЕСТО ОТСЛЕЖИВАНИЯ window.location.search Я ОТСЛЕЖИВАЮ searchParams ЧТОБЫ ПРИ КАЖДОМ ОБНОВЛЕНИИ ПАРАМЕТРОВ ДОБАВЛЯТЬ ИХ В СТЕЙТ РЕДАКСА И ТЕМ САМЫМ УСТРАНИТЬ БАГ, ГДЕ ПРИ ПЕРВОМ НАЖАТИИ НА ПОИСК В ФИЛЬТРАХ, УХОДИЛ ПУСТОЙ ЗАПРОС С ПРЕДЫДУЩЕМ ЗНАЧЕНИЕМ, Т.К. БЕЗ USELOCATION НЕ ОБНОВЛЯЛО НОРМАЛЬНО А АНАЛОГА В NEXT Я ТАК И НЕ НАШЕЛ
+
+	
 
 	useEffect(() => {
 		// const searchParams = new URLSearchParams(window.location.search);
