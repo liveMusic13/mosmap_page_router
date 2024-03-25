@@ -44,8 +44,8 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 			searchParams.set(name, value);
 		}
 
-		router.push('?' + searchParams.toString());
-	}, 100);
+		router.replace('?' + searchParams.toString(), undefined, { shallow: true });
+	}, 500);
 
 	const onChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;

@@ -91,7 +91,8 @@ const CustomSelect: FC<ICustomSelect> = ({
 				searchParams.delete(dataSelect.name);
 			} //HELP: ЗАПИСЬ ЗНАЧЕНИЙ В СТРОКУ
 
-			router.push('?' + searchParams.toString());
+			// router.push('?' + searchParams.toString());
+			router.replace('?' + searchParams.toString(), undefined, { shallow: true });
 		} else {
 			if (selectedOption && selectedOption.value) {
 				searchParams.set(dataSelect.name, String(selectedOption.value));
@@ -99,13 +100,14 @@ const CustomSelect: FC<ICustomSelect> = ({
 				searchParams.delete(dataSelect.name);
 			}
 
-			router.push('?' + searchParams.toString());
+			// router.push('?' + searchParams.toString());
+			router.replace('?' + searchParams.toString(), undefined, { shallow: true });
 		}
 	};
 
-	useEffect(() => {
-		dispatch(adresFilterStringAction.addGetParams(search));
-	}, [search]);
+	// useEffect(() => {
+	// 	dispatch(adresFilterStringAction.addGetParams(search));
+	// }, [search]);
 
 	useEffect(() => {
 		if (clearFilter) {
