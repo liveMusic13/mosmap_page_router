@@ -85,6 +85,19 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 		}
 	};
 
+	const clearRequestData = async () => {
+		try {
+			dispatch(viewSettingsActions.activeLoading(''));
+			const response = await $axios.get(`/api/get_objects.php?map=${map}`);
+					dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
+			
+		} catch (error) {
+			console.log(error);
+		} finally {
+			dispatch(viewSettingsActions.defaultLoading(''));
+		}
+	}
+
 	return (
 		<div
 			className={styles.block__filters}
@@ -130,8 +143,11 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 							console.log('clear test');
 							const timeoutId = setTimeout(() => {
 								setClearFilter(false);
+								clearRequestData()
 							}, 1000);
+
 							return () => clearTimeout(timeoutId);
+							
 						}}
 					>
 						очистить
