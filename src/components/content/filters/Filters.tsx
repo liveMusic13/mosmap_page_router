@@ -16,6 +16,7 @@ import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 import { $axios } from '@/api';
 
+import { useRouter } from 'next/router';
 import styles from './Filters.module.scss';
 
 const DynamicInput = dynamic(
@@ -85,10 +86,12 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 		}
 	};
 
+	const {query} = useRouter()
+
 	const clearRequestData = async () => {
 		try {
 			dispatch(viewSettingsActions.activeLoading(''));
-			const response = await $axios.get(`/api/get_objects.php?map=${map}`);
+			const response = await $axios.get(`/api/get_objects.php?map=${query.map}`);
 					dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
 			
 		} catch (error) {
