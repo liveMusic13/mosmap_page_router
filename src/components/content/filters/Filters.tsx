@@ -140,7 +140,6 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 						className={styles.button_clear}
 						onClick={() => {
 							setClearFilter(true);
-							console.log('clear test');
 							const timeoutId = setTimeout(() => {
 								setClearFilter(false);
 								clearRequestData()
