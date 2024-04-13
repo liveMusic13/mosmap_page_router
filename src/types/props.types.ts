@@ -33,6 +33,10 @@ export interface IButton {
 	elem?: IMarker;
 }
 
+export interface IButtonEditing {
+	icon: IIconsData;
+}
+
 export interface ILoading {
 	height: string;
 }

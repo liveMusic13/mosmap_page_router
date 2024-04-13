@@ -14,6 +14,19 @@ export const dataObjectInfo = createSlice({
 		deleteObjectInfo: (state, { payload }) => {
 			return {};
 		},
+		updateField: (state, { payload }) => {
+			const { name, value } = payload;
+			const fieldIndex = state.values.findIndex((field: any) => field.name === name);
+			if (fieldIndex !== -1) {
+				state.values[fieldIndex].value = value;
+			}
+		},
+		addCrd: (state, {payload})=> {
+			state.crd = payload
+		},
+		deleteCrd: (state, {payload})=> {
+			state.crd = null
+		}
 	},
 });
 

@@ -10,12 +10,45 @@ const initialState: IViewSettings = {
 	isLoading: false,
 	isLoadingObject: false,
 	isDisplay: true,
+	isSelectArea: false,
+	editingObjects: {
+		isAddObject: true,
+		isEditObjects: false,
+		isDeleteObject: false,
+		isDeleteMarker: false,
+		isActiveAddButton: false,
+		isActiveEditButton: false
+	}
 };
 
 export const viewSettings = createSlice({
 	name: 'viewSettings',
 	initialState,
 	reducers: {
+		toggleIsActiveEditButton: (state, { payload }) => {
+			return { ...state,  editingObjects: {...state.editingObjects, isActiveEditButton: !state.editingObjects.isActiveEditButton }};
+		},
+		toggleIsActiveAddButton: (state, { payload }) => {
+			return { ...state,  editingObjects: {...state.editingObjects, isActiveAddButton: !state.editingObjects.isActiveAddButton }};
+		},
+		activeDeleteMarker: (state, { payload }) => {
+			return { ...state,  editingObjects: {...state.editingObjects, isDeleteMarker: true }};
+		},
+		defaultDeleteMarker: (state, { payload }) => {
+			return { ...state, editingObjects: {...state.editingObjects, isDeleteMarker: false }};
+		},
+		activeDeleteObject: (state, { payload }) => {
+			return { ...state, editingObjects: {...state.editingObjects, isDeleteObject: true }};
+		},
+		defaultDeleteObject: (state, { payload }) => {
+			return { ...state, editingObjects: {...state.editingObjects, isDeleteObject: false }};
+		},
+		activeEditObjects: (state, { payload }) => {
+			return { ...state, editingObjects: {...state.editingObjects, isEditObjects: true }};
+		},
+		defaultEditObjects: (state, { payload }) => {
+			return { ...state, editingObjects: {...state.editingObjects, isEditObjects: false }};
+		},
 		toggleFilters: (state, { payload }) => {
 			return { ...state, isViewFilters: !state.isViewFilters };
 		},
@@ -58,6 +91,9 @@ export const viewSettings = createSlice({
 		defaultObjectInfo: (state, { payload }) => {
 			return { ...state, isObjectInfo: false };
 		},
+		toogleIsSelectArea: (state, {payload}) => {
+			return {...state, isSelectArea: !state.isSelectArea}
+		}
 	},
 });
 

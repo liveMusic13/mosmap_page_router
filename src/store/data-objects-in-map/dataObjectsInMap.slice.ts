@@ -19,6 +19,15 @@ export const dataObjectsInMap = createSlice({
 		addNewCenter: (state, { payload }) => {
 			state.centerMapObject = payload;
 		},
+		addNewObject: (state, {payload}) => {
+			state.points.points.unshift(payload)
+		},
+		deleteNewObject: (state, {payload}) => {
+			state.points.points.shift()
+		},
+		deleteObjectById: (state, {payload}) => {
+			state.points.points = state.points.points.filter((marker:any) => marker.id !== payload)
+		}
 	},
 });
 

@@ -1,16 +1,14 @@
-
-
 import { useSelector } from 'react-redux';
 
 import Button from '@/components/ui/button/Button';
 
 import { RootState } from '@/store/store';
 
+import ButtonEditing from '../ui/button-editing/ButtonEditing';
 import styles from './Header.module.scss';
-import { arrayNumSettingIcons } from './icons.data';
+import { arrayEditingObjects, arrayNumIcons, arrayNumSettingIcons } from './icons.data';
 
 export function Header({data}:any) {
-
 	const dataObjectsInMap = useSelector(
 		(state: RootState) => state.dataObjectsInMap,
 	);
@@ -18,11 +16,18 @@ export function Header({data}:any) {
 	return (
 		<header className={styles.header}>
 			<div className={styles.map__buttons}>
+				{
+					arrayEditingObjects.map(icon => {
+						return <ButtonEditing key={icon.id} icon={icon} />;
+					})
+				}
+				{arrayNumIcons.map(icon => {
+					return <Button key={icon.id} icon={icon} />;
+				})}
 				<div className={styles.block__title}>
-					<h1 className={styles.title}>
-						{/* {dataObjectsInMap?.points?.title
-							? dataObjectsInMap?.points?.title
-							: 'Тестовая карта'} */}
+					<div className={styles.line}></div>
+					<div className={styles.line}></div>
+					<h1 className={styles.title}>т
 							{data.title
 							? data.title
 							: 'Тестовая карта'}

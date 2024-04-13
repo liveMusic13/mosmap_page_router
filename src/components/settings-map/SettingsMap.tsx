@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,7 +12,7 @@ import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 import styles from './SettingsMap.module.scss';
 
-export function SettingsMap({data}:any) {
+export function SettingsMap() {
 	const viewSettings = useSelector((state: RootState) => state.viewSettings);
 	const dispatch = useDispatch();
 	const { width } = useWindowDimensions();
@@ -44,9 +42,9 @@ export function SettingsMap({data}:any) {
 			>
 				<span></span>
 			</button>
-			{viewSettings.isViewFilters && <Filters isMobile={isMobile} />}
-			{viewSettings.isObjectInfo && <ObjectInfo isMobile={isMobile} />}
-			{viewSettings.isViewObjects && <AllObjects isMobile={isMobile} data={data} />}
+			{viewSettings.isViewFilters && <Filters />}
+			{viewSettings.isObjectInfo && <ObjectInfo />}
+			{viewSettings.isViewObjects && <AllObjects />}
 		</div>
 	);
 }

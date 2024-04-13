@@ -1,5 +1,3 @@
-
-
 import { FC } from 'react';
 import { useMapEvents } from 'react-leaflet';
 

@@ -1,42 +1,24 @@
 import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { IInput } from '@/types/props.types';
 
 import { actions as adresFilterStringAction } from '@/store/adres-filter-string/adresFilterString.slice';
-import { RootState } from '@/store/store';
 
 import styles from './Input.module.scss';
 
 const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
-	const { map } = useSelector((state: RootState) => state.userMap);
-	const { srcRequest } = useSelector((state: RootState) => state.adresFilterString);
 	const [test, setTest] = useState<string>('');
 	const [isInputValid, setIsInputValid] = useState<boolean>(true);
 	const dispatch = useDispatch();
-	// const navigate = useNavigate();
-	// const { search } = useLocation();
-	// const [searchParams, setSearchParams] = useSearchParams();
 
-	// const updateURL = debounce((name, value) => {
-	// 	setSearchParams(prevPar => {
-	// 		if (value === '') {
-	// 			prevPar.delete(name);
-	// 		} else {
-	// 			prevPar.set(name, value);
-	// 		}
-	// 	});
-	// 	navigate('?' + searchParams.toString());
-	// }, 500); //HELP: 500 миллисекунд задержки
 	const router = useRouter();
-	// const searchParams = useSearchParams()
 
 	const searchParams = new URLSearchParams(window.location.search);
 
 	const updateURL = debounce((name, value) => {
-		// const searchParams = new URLSearchParams(window.location.search);
 
 		if (value === '') {
 			searchParams.delete(name);
@@ -58,7 +40,7 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 			setIsInputValid(false);
 		}
 	};
-	//TODO: ПРОВЕРИТЬ РАБОТАЕТ ЛИ МОЙ ПОДХОД С window.location.search ВМЕСТО USELOCATION
+
 	useEffect(() => {
 		dispatch(adresFilterStringAction.addGetParams(window.location.search));
 	}, [searchParams]); //HELP: ВМЕСТО ОТСЛЕЖИВАНИЯ window.location.search Я ОТСЛЕЖИВАЮ searchParams ЧТОБЫ ПРИ КАЖДОМ ОБНОВЛЕНИИ ПАРАМЕТРОВ ДОБАВЛЯТЬ ИХ В СТЕЙТ РЕДАКСА И ТЕМ САМЫМ УСТРАНИТЬ БАГ, ГДЕ ПРИ ПЕРВОМ НАЖАТИИ НА ПОИСК В ФИЛЬТРАХ, УХОДИЛ ПУСТОЙ ЗАПРОС С ПРЕДЫДУЩЕМ ЗНАЧЕНИЕМ, Т.К. БЕЗ USELOCATION НЕ ОБНОВЛЯЛО НОРМАЛЬНО А АНАЛОГА В NEXT Я ТАК И НЕ НАШЕЛ
@@ -66,12 +48,8 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 	
 
 	useEffect(() => {
-		// const searchParams = new URLSearchParams(window.location.search);
-
 		if (clearFilter) {
 			setTest('');
-			// searchParams.set('map', `${userMap.map}`);
-			// window.location.href = window.location.pathname;
 			let paramsToDelete = [];
 
 			for (let param of searchParams.keys()) {
@@ -88,13 +66,12 @@ const Input: FC<IInput> = ({ placeholder, name, clearFilter }) => {
 				document.title,
 				window.location.pathname + '?' + searchParams.toString(),
 			);
-			// window.history.replaceState({}, document.title, window.location.pathname); //TODO: С ЭТИМ ВАРИАНТОМ ВСЕ УДАЛЯЕТСЯ И ДЕЛАЕТСЯ ЗАПРОС С НУЛЕВЫМИ ДАННЫМИ
+		
 			dispatch(adresFilterStringAction.clearGetParams(''));
 		}
 	}, [clearFilter]);
 
 	useEffect(() => {
-		// const searchParams = new URLSearchParams(window.location.search);
 		const paramValue = searchParams.get(name);
 
 		if (paramValue !== null) {

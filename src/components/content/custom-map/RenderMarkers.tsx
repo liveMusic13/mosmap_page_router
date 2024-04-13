@@ -1,5 +1,3 @@
-
-
 import L, { divIcon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FC, useEffect } from 'react';

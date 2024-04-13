@@ -28,7 +28,6 @@ const CustomSelect: FC<ICustomSelect> = ({
 		? transformFieldForSelect(dataSelect.items)
 		: [];
 	const router = useRouter();
-	// const searchParams = useSearchParams();
 	const dispatch = useDispatch();
 	const search = window.location.search;
 
@@ -65,7 +64,6 @@ const CustomSelect: FC<ICustomSelect> = ({
 					);
 
 				const newKeyInObj = transformFieldForSelect(targetSelect); //HELP: С ПОМОЩЬЮ ФУНКЦИИ МЕНЯЕМ НАЗВАНИЯ ПОЛЕЙ, ЧТОБЫ REACT-SELECT МОГ СЧИТЫВАТЬ ЗНАЧЕНИЯ.
-
 				setSelectedOption(newKeyInObj); //HELP: ЗАПИСЫВАЕМ МАССИВ С ОДНИМ ОБЪЕКТОМ В ЗНАЧЕНИЯ СЕЛЕКТА
 			}
 		}
@@ -91,7 +89,6 @@ const CustomSelect: FC<ICustomSelect> = ({
 				searchParams.delete(dataSelect.name);
 			} //HELP: ЗАПИСЬ ЗНАЧЕНИЙ В СТРОКУ
 
-			// router.push('?' + searchParams.toString());
 			router.replace('?' + searchParams.toString(), undefined, { shallow: true });
 		} else {
 			if (selectedOption && selectedOption.value) {
@@ -100,14 +97,9 @@ const CustomSelect: FC<ICustomSelect> = ({
 				searchParams.delete(dataSelect.name);
 			}
 
-			// router.push('?' + searchParams.toString());
 			router.replace('?' + searchParams.toString(), undefined, { shallow: true });
 		}
 	};
-
-	// useEffect(() => {
-	// 	dispatch(adresFilterStringAction.addGetParams(search));
-	// }, [search]);
 
 	useEffect(() => {
 		if (clearFilter) {

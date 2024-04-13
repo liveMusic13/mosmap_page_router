@@ -14,20 +14,17 @@ import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 import styles from './ObjectInfo.module.scss';
 
-const ObjectInfo: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
+const ObjectInfo: FC<IAllObjects> = ({ isDisplay }) => {
 	const viewSettings = useSelector((state: RootState) => state.viewSettings);
 	const dataObjectInfo = useSelector(
 		(state: RootState) => state.dataObjectInfo,
 	);
 	const dispatch = useDispatch();
 	const { width } = useWindowDimensions();
-	console.log('отработало', isDisplay);
+
 	return (
 		<div
 			className={styles.block__info}
-			// style={
-			// 	isMobile && !isDisplay ? { display: 'block' } : { display: 'none' }
-			// }
 		>
 			<div className={styles.block__title}>
 				<h2 className={styles.title}>Просмотр объекта</h2>

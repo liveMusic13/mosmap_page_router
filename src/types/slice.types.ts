@@ -52,6 +52,15 @@ export interface IViewSettings {
 	isLoading: boolean;
 	isLoadingObject: boolean;
 	isDisplay: boolean;
+	isSelectArea: boolean;
+	editingObjects: {
+		isAddObject: boolean,
+		isEditObjects: boolean,
+		isDeleteObject: boolean,
+		isDeleteMarker: boolean,
+		isActiveAddButton: boolean,
+		isActiveEditButton: boolean
+	}
 }
 
 export interface IDataMap {

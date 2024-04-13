@@ -1,5 +1,3 @@
-
-
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +11,7 @@ import { IMarker } from '@/types/slice.types';
 import styles from './Content.module.scss';
 import { AllObjects } from './all-objects/AllObjects';
 import Filters from './filters/Filters';
+import AddAndEditObject from './filters/add-and-edit-object/AddAndEditObject';
 import ObjectInfo from './object-info/ObjectInfo';
 
 const DynamicMapCustom = dynamic(
@@ -26,7 +25,6 @@ export function Content({data}:any) {
 	const dataObjectsInMap = useSelector(
 		(state: RootState) => state.dataObjectsInMap,
 	);
-	// const windowSize = window.innerWidth;
 	const { width } = useWindowDimensions();
 	const [isDisplay, setIsDisplay] = useState<boolean>(true);
 	const dispatch = useDispatch();
@@ -43,11 +41,12 @@ export function Content({data}:any) {
 
 	return (
 		<div className={styles.wrapper}>
-			{viewSettings.isViewFilters && <Filters isDisplay={isDisplay} />}
+			{viewSettings.editingObjects.isActiveAddButton && <AddAndEditObject/>}
+			{viewSettings.isViewFilters && <Filters />}
 			{viewSettings.isObjectInfo && <ObjectInfo isDisplay={isDisplay} />}
 			{viewSettings.isViewObjects &&
 				dataObjectsInMap.points['all-points'] <= 6000 && (
-					<AllObjects isDisplay={isDisplay} data={data} />
+					<AllObjects />
 				)}
 				<div style={{opacity:'0', position: 'absolute', zIndex: '-1'}}>
 				{data.points.map((elem: IMarker) => {

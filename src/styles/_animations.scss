@@ -1,3 +1,6 @@
+@import './variables';
+@import './functions';
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -7,5 +10,51 @@
 	}
 	100% {
 		background-position: 0% 50%;
+	}
+}
+
+@keyframes auth-label {
+	0% {
+		top: 20%;
+	}
+	100% {
+		top: 0%;
+		color: $color_two;
+		font-size: 0.7rem;
+	}
+}
+
+@keyframes auth-label-not-focus {
+	0% {
+		top: 0%;
+		color: $color_two;
+		font-size: 0.7rem;
+	}
+	100% {
+		top: 20%;
+		color: $color_eight;
+		font-size: 1rem;
+	}
+}
+
+@keyframes button-auth {
+	0%{
+		background-color: $color_two;
+		box-shadow: 0px adapt(2px, 1440px) adapt(2px, 1440px) rgba($color: $color_eight, $alpha: .5);
+	}
+	100%{
+		background-color: $color_two_light;
+		box-shadow: 0px adapt(3px, 1440px) adapt(3px, 1440px) rgba($color: $color_eight, $alpha: .5);
+	}
+}
+
+@keyframes button-auth-reverse {
+	0%{
+		background-color: $color_two_light;
+		box-shadow: 0px adapt(3px, 1440px) adapt(3px, 1440px) rgba($color: $color_eight, $alpha: .5);
+	}
+	100%{
+		background-color: $color_two;
+		box-shadow: 0px adapt(2px, 1440px) adapt(2px, 1440px) rgba($color: $color_eight, $alpha: .5);
 	}
 }

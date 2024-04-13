@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home({data, dataFilters}:any) {
-
   const dispatch = useDispatch();
 	const adresFilterString = useSelector(
 		(state: RootState) => state.adresFilterString,
@@ -26,7 +25,7 @@ export default function Home({data, dataFilters}:any) {
 	const { push } = useRouter();
 	const searchParams = useSearchParams();
 	const map = searchParams.get('map');
-	const { getObject, getFilters } = useInitRequest();
+	const { getObject } = useInitRequest();
 	const [initApp, setInitApp] = useState(false);
 
 	useEffect(() => {
@@ -44,7 +43,6 @@ export default function Home({data, dataFilters}:any) {
 			push(`?map=7`);
 		} else {
 			getObject();//HELP: НУЖЕН ДЛЯ ТОГО ЧТОБЫ ЗАПИСЬ С БЭКА НЕ ПЕРЕБИВАЛА ДАННЫЕ С РЕДАКСА И ПРОИСХОДИЛА ФИЛЬТРАЦИЯ СПИСКА
-			// getFilters();
 			// dispatch( dataObjectsInMapAction.addDataObjectsInMap(data));
 			dispatch(dataFiltersAction.addFilters(dataFilters));
 		}
@@ -68,7 +66,7 @@ export default function Home({data, dataFilters}:any) {
 			<Header data={data}/>
 			<div style={{ height: '100%' }}>
 			<Content data={data} />
-			{isSettingsMap && <SettingsMap data={data} />}
+			{isSettingsMap && <SettingsMap />}
 		</div>
 		</>
 	);

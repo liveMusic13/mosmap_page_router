@@ -1,5 +1,6 @@
-@import '../../../styles/variables';
-@import '../../../styles/functions';
+@import '../../../../styles/variables';
+@import '../../../../styles/functions';
+@import '../../../../styles/animations';
 
 .block__filters {
 	display: flex;
@@ -7,7 +8,7 @@
 	width: adapt(300px, 1440px);
 	height: 100%;
 	position: absolute;
-	z-index: 5490;
+	z-index: 5491;
 	left: 0;
 	background-color: $color_three;
 
@@ -16,15 +17,62 @@
 		position: relative;
 	}
 
-	> .title {
-		background-color: $color_five;
-		font-weight: 500;
+	> .block__title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		padding: adapt(8px, 1440px);
-		height: adapt(52px, 1440px);
+		background-color: $color_five;
 		border-bottom: 1px solid $color_four;
+		border-left: 1px solid $color_four;
+		height: adapt(52px, 1440px);
 
 		@media (max-width: 767.98px) {
-			height: adapt(100px, 1440px);
+			height: adapt(110px, 1440px);
+		}
+
+		> .title {
+			font-size: 1rem;
+			line-height: 1.5;
+			font-weight: 500;
+		}
+
+		> .button__close {
+			width: adapt(25px, 1440px);
+			height: adapt(25px, 1440px);
+			background-color: transparent;
+			position: relative;
+			top: 0;
+			z-index: 5555;
+
+			&:hover {
+				cursor: pointer;
+				background-color: $color_four;
+			}
+
+			@media (max-width: 767.98px) {
+				display: none;
+			}
+
+			> span {
+				width: adapt(25px, 1440px);
+				height: 2px;
+				background-color: $color_two;
+				display: block;
+				transform: rotate(-45deg);
+			}
+
+			&::after {
+				position: absolute;
+				content: '';
+				width: adapt(25px, 1440px);
+				height: 2px;
+				left: 0;
+				bottom: 44.5%;
+				background-color: $color_two;
+				transform: rotate(45deg);
+				z-index: 6000;
+			}
 		}
 	}
 
@@ -103,5 +151,56 @@
 				}
 			}
 		}
+	}
+}
+
+
+.block__input {
+  height: adapt(66.8px, 1440px);
+  margin-bottom: adapt(8px, 1440px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &:focus-within,
+  &.has_content {
+    .input__label{
+      animation: auth-label 1s ease 1 forwards;
+    }
+  }
+
+  >.input__label {
+    color: $color_eight;
+    margin-left: adapt(12px, 1440px);
+    position: absolute;
+    animation: auth-label-not-focus 1s ease 1 forwards;
+
+		&:hover {
+			cursor: pointer;
+		}
+  }
+  
+  >.input__login{
+    margin: adapt(16px, 1440px) adapt(12px, 1440px);
+    border-bottom: 1px solid $color_eight;
+    height: 100%;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0px 2px 2px $color_two;
+    }
+
+		&:hover {
+			cursor: pointer;
+		}
+  }
+}
+
+.block__select {
+	padding: adapt(8px, 1440px);
+
+	> .title {
+		font-size: 0.8rem;
+		color: $color_eight;
 	}
 }

@@ -1,9 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, } from '@reduxjs/toolkit';
 
 import { reducer as adresFilterString } from './adres-filter-string/adresFilterString.slice';
 import { reducer as dataFilters } from './data-filters/dataFilters.slice';
 import { reducer as dataObjectInfo } from './data-object-info/dataObjectInfo.slice';
 import { reducer as dataObjectsInMap } from './data-objects-in-map/dataObjectsInMap.slice';
+import { reducer as mapLayers } from './map-layers/mapLayers.slice';
 import { reducer as userMap } from './user-map/userMap.slice';
 import { reducer as viewSettings } from './view-settings/viewSettings.slice';
 
@@ -14,10 +15,12 @@ const reducers = combineReducers({
 	userMap: userMap,
 	dataFilters: dataFilters,
 	adresFilterString: adresFilterString,
+	mapLayers:mapLayers
 });
 
 export const store = configureStore({
 	reducer: reducers,
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,4 +1,6 @@
 @import './variables';
+@import './functions';
+@import './animations';
 
 *,
 *::before,
@@ -75,6 +77,202 @@ body {
 #__next {
 	height: 100vh;
 }
+
+.wrapper_auth {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	>.block__auth {
+		width: adapt(500px,1440px);
+		height: adapt(310px, 1440px);
+		box-shadow: 0px adapt(5px, 1440px) adapt(10px, 1440px) rgba($color: $color_eight, $alpha: .5);
+		border-radius: adapt(5px, 1440px);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		font-size: 1rem;
+
+		>.title__auth {
+			height: adapt(48.8px, 1440px);
+			width: 100%;
+			background-color: rgba($color: $color_seven, $alpha: .25);
+			border-top-left-radius: adapt(5px, 1440px);
+			border-top-right-radius: adapt(5px, 1440px);
+			font-weight: 600;
+			padding: adapt(12px, 1440px) adapt(12px, 1440px) 0px;
+			border-bottom: 1px solid $color_seven;
+		}
+
+		// >.form {
+		// 	>.block__input {
+		// 		height: adapt(66.8px, 1440px);
+		// 		margin-bottom: adapt(8px, 1440px);
+		// 		display: flex;
+		// 		flex-direction: column;
+		// 		position: relative;
+
+		// 		&:focus-within {
+		// 			>.input__label_login {
+		// 				animation: auth-label 1s ease 1 forwards;
+		// 			}
+
+		// 			>.input__label_password {
+		// 				animation: auth-label 1s ease 1 forwards;
+		// 			}
+		// 		}
+	
+		// 		>.input__label_login {
+		// 			color: $color_eight;
+		// 			margin-left: adapt(12px, 1440px);
+		// 			position: absolute;
+		// 			animation: auth-label-not-focus 1s ease 1 forwards;
+		// 		}
+				
+		// 		>.input__login{
+		// 			margin: adapt(16px, 1440px) adapt(12px, 1440px);
+		// 			border-bottom: 1px solid $color_eight;
+		// 			height: 100%;
+		// 			outline: none;
+
+		// 			&:focus {
+		// 				box-shadow: 0px 2px 2px $color_two;
+		// 			}
+		// 		}
+		
+		// 		>.input__label_password{
+		// 			color: $color_eight;
+		// 			margin-left: adapt(12px, 1440px);
+		// 			position: absolute;
+		// 			animation: auth-label-not-focus 1s ease 1 forwards;
+		// 		}
+				
+		// 		>.input__password{
+		// 			margin: adapt(16px, 1440px) adapt(12px, 1440px);
+		// 			border-bottom: 1px solid $color_eight;
+		// 			height: 100%;
+		// 			outline: none;
+
+		// 			&:focus {
+		// 				box-shadow: 0px 2px 2px $color_two;
+		// 			}
+		// 		}
+		// 	}
+
+		// 	>.button__auth{
+		// 		width: adapt(476px, 1440px);
+		// 		height: adapt(36px, 1440px);
+		// 		margin: 0px adapt(12px, 1440px) adapt(8px, 1440px);
+		// 		// background-color: $color_two;
+		// 		border-radius: 2px;
+		// 		// box-shadow: 0px adapt(2px, 1440px) adapt(2px, 1440px) rgba($color: $color_eight, $alpha: .5);
+		// 		color: $color_three;
+		// 		animation: button-auth-reverse 0.8s ease 1 forwards;
+	
+		// 		&:hover {
+		// 			cursor: pointer;
+		// 			// background-color: $color_two_light;
+		// 			// height: adapt(40px, 1440px);
+		// 			animation: button-auth 0.8s ease 1 forwards;
+		// 		}
+		// 	}
+		// }
+
+		>.form {
+				>.block__input {
+					height: adapt(66.8px, 1440px);
+					margin-bottom: adapt(8px, 1440px);
+					display: flex;
+					flex-direction: column;
+					position: relative;
+	
+					&:focus-within,
+					&.has-content {
+						.input__label_login,
+						.input__label_password {
+							animation: auth-label 1s ease 1 forwards;
+						}
+					}
+		
+					>.input__label_login {
+						color: $color_eight;
+						margin-left: adapt(12px, 1440px);
+						position: absolute;
+						animation: auth-label-not-focus 1s ease 1 forwards;
+					}
+					
+					>.input__login{
+						margin: adapt(16px, 1440px) adapt(12px, 1440px);
+						border-bottom: 1px solid $color_eight;
+						height: 100%;
+						outline: none;
+	
+						&:focus {
+							box-shadow: 0px 2px 2px $color_two;
+						}
+					}
+			
+					>.input__label_password{
+						color: $color_eight;
+						margin-left: adapt(12px, 1440px);
+						position: absolute;
+						animation: auth-label-not-focus 1s ease 1 forwards;
+					}
+					
+					>.input__password{
+						margin: adapt(16px, 1440px) adapt(12px, 1440px);
+						border-bottom: 1px solid $color_eight;
+						height: 100%;
+						outline: none;
+	
+						&:focus {
+							box-shadow: 0px 2px 2px $color_two;
+						}
+					}
+				}
+	
+				>.button__auth{
+					width: adapt(476px, 1440px);
+					height: adapt(36px, 1440px);
+					margin: 0px adapt(12px, 1440px) adapt(8px, 1440px);
+					// background-color: $color_two;
+					border-radius: 2px;
+					// box-shadow: 0px adapt(2px, 1440px) adapt(2px, 1440px) rgba($color: $color_eight, $alpha: .5);
+					color: $color_three;
+					animation: button-auth-reverse 0.8s ease 1 forwards;
+		
+					&:hover {
+						cursor: pointer;
+						// background-color: $color_two_light;
+						// height: adapt(40px, 1440px);
+						animation: button-auth 0.8s ease 1 forwards;
+					}
+				}
+			}
+		
+
+		>.block__all{
+			display: flex;
+			justify-content: space-between;
+			padding: adapt(8px, 1440px) adapt(12px, 1440px);
+
+			>button {
+				color: $color_ten;
+				background-color: transparent;
+
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			>.button__register{}
+
+			>.button__restore-password{}
+		}
+	}
+}
+
 //убираем логотип с украинским флагом
 .leaflet-control-attribution.leaflet-control {
 	display: none;
@@ -171,4 +369,11 @@ body {
 	}
 .marker-cluster span {
 	line-height: 30px;
+	}
+
+	//HELP: УБИРАЕМ КНОПКУ ДЛЯ РЕДАКТИРОВАНИЯ ВЫДЕЛЕННОЙ ОБЛАСТИ
+	.leaflet-bar {
+		>.leaflet-draw-edit-edit {
+			display: none;
+		}
 	}

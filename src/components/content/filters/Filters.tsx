@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import BlockInput from '@/components/ui/block-input/BlockInput';
 import CustomSelect from '@/components/ui/custom-select/CustomSelect';
 
-import { IAllObjects } from '@/types/props.types';
 import { IDataFilters } from '@/types/slice.types';
 
 import { actions as dataObjectsInMapAction } from '@/store/data-objects-in-map/dataObjectsInMap.slice';
@@ -24,7 +23,7 @@ const DynamicInput = dynamic(
 	{ ssr: false },
 );
 
-const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
+const Filters: FC = () => {
 	const dispatch = useDispatch();
 	const dataFilters: IDataFilters[] = useSelector(
 		(state: RootState) => state.dataFilters,
@@ -36,32 +35,6 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 	const [clearFilter, setClearFilter] = useState<boolean>(false);
 
 	const { width } = useWindowDimensions();
-
-	// const [initialInClient, setInitialInClient] = useState(0)
-
-// const router = useRouter();
-// const { query } = router;
-
-// 	const test = async()=> {
-// 		console.log('adresFilterString.srcRequest', adresFilterString.srcRequest)
-// 		const response = await $axios.get(
-// 			`/api/get_objects.php${adresFilterString.srcRequest}`,
-// 		);
-// 		dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
-// 	}
-
-// 	useEffect(()=> {
-// 		if (initialInClient === 0) {
-// 			const timeoutId = setTimeout(()=>{
-// 				debugger
-// 				test()
-// 				setInitialInClient(prev => prev + 1)
-
-// 			}, 3000)
-
-// 			return ()=> clearTimeout(timeoutId)
-// 		}
-// 	},[])
 
 	const getFiltersObject = async () => {
 		try {
@@ -104,9 +77,6 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 	return (
 		<div
 			className={styles.block__filters}
-			// style={
-			// 	isMobile && !isDisplay ? { display: 'block' } : { display: 'none' }
-			// }
 		>
 			<h2 className={styles.title}>Фильтры</h2>
 			<div className={styles.wrapper_block__filters}>
@@ -149,7 +119,6 @@ const Filters: FC<IAllObjects> = ({ isDisplay, isMobile }) => {
 							}, 1000);
 
 							return () => clearTimeout(timeoutId);
-							
 						}}
 					>
 						очистить

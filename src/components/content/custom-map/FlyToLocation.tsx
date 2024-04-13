@@ -1,5 +1,3 @@
-
-
 import { FC, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 

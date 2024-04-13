@@ -1,5 +1,3 @@
-
-
 import L, { Canvas } from 'leaflet';
 import { FC, useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
@@ -15,8 +13,6 @@ import { actions as viewSettingsAction } from '@/store/view-settings/viewSetting
 import { $axios } from '@/api';
 import { ARGBtoHEX } from '@/utils/convertColor';
 import { getIconForMarker } from '@/utils/iconForMarker';
-
-
 
 const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 	markersData,
@@ -39,7 +35,6 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 		if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
 
 		dispatch(viewSettingsAction.toggleObjectInfo(''));
-
 		try {
 			dispatch(viewSettingsAction.activeLoadingObject(''));
 
@@ -83,8 +78,6 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 			polygonsRef.current.forEach(polygon => map.removeLayer(polygon));
 			polygonsRef.current = [];
 		}
-
-	
 
 			for (let marker of markersData) {
 				let mapObject;
@@ -144,13 +137,9 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 				}
 			}
 		
-
-
 		function handleMoveEndZoomEnd() {
 			let bounds = map.getBounds();
 			const zoomLevelForIcon = map.getZoom();
-
-
 
 	for (let marker of markersData) {
 		if (
@@ -203,7 +192,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 	}
 
 			setTimeout(() => {
-				map.invalidateSize();
+				if (map !== undefined) map.invalidateSize();
 			}, 2000);
 		}
 
@@ -211,13 +200,17 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 
 		function updateMarkers() {
 			//HELP: функция смещает координаты с центра, чтобы имитировать движение по карте. Это решает проблему, в которой при подгрузке данных или зуме, не отображался новый холст пока не передвинешь карту мышкой
-			const timeoutId = setTimeout(() => {
-				//HELP: ТАЙМАУТ УБИРАЕТ БАГ "ПЕРВОГО КЛИКА" ПО НЕКОТОРЫМ ОБЪЕКТАМ
-				var center = map.getCenter();
-				map.panTo(center);
-			}, 500);
-			return () => clearTimeout(timeoutId);
+			if (map !== undefined) {
+
+				const timeoutId = setTimeout(() => {
+					//HELP: ТАЙМАУТ УБИРАЕТ БАГ "ПЕРВОГО КЛИКА" ПО НЕКОТОРЫМ ОБЪЕКТАМ
+					var center = map.getCenter();
+					map.panTo(center);
+				}, 500);
+				return () => clearTimeout(timeoutId);
+			}
 		}
+		
 		updateMarkers();
 
 		return () => {
