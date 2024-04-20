@@ -143,7 +143,7 @@ export function CustomMap() {
 				isInitialized={isInitialized} //HELP: ДЛЯ ОТСЛЕЖИВАНИЯ ИНИЦИАЛИЗАЦИИ, ЧТОБЫ ПРИ ПЕРВОМ ЗАПУСКЕ ЗУМ НА 17 НЕ СТАВИЛСЯ
 				setIsInitialized={setIsInitialized}
 			/>
-			{viewSettings.editingObjects.isActiveAddButton && <LocationMarker/>}
+			{(viewSettings.editingObjects.isActiveAddButton || viewSettings.editingObjects.isActiveEditButton) && <LocationMarker/>}
 			{
 				viewSettings.isSelectArea && <FeatureGroup>
 				<EditControl position='topright' onCreated={_onCreated} onDeleted={_onDeleted} draw={{

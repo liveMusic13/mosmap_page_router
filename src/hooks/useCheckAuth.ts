@@ -1,3 +1,5 @@
+import { TOKEN } from "@/app.constants"
+import Cookies from "js-cookie"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useAuth } from "./useAuth"
@@ -7,6 +9,6 @@ export const useCheckAuth = () => {
   const router = useRouter()
 
   useEffect(()=> {
-    if (!isAuth) router.push('/auth')
-  }, [isAuth])
+    if (Cookies.get(TOKEN)) setIsAuth(true)
+  }, [Cookies.get(TOKEN)])
 }

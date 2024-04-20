@@ -42,6 +42,7 @@ export interface IDataObjectInfo {
 
 export interface IUserMap {
 	map: string;
+	accessiblyMap: string[]
 }
 
 export interface IViewSettings {
@@ -59,7 +60,11 @@ export interface IViewSettings {
 		isDeleteObject: boolean,
 		isDeleteMarker: boolean,
 		isActiveAddButton: boolean,
-		isActiveEditButton: boolean
+		isActiveEditButton: boolean,
+		isViewPopup: {
+			isObject: boolean,
+			isMarker: boolean,
+		},
 	}
 }
 

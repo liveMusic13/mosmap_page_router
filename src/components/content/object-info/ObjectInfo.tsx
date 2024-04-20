@@ -62,7 +62,7 @@ const ObjectInfo: FC<IAllObjects> = ({ isDisplay }) => {
 					</>
 				) : (
 					<>
-						{dataObjectInfo.values.map((elem: IValues) => {
+						{dataObjectInfo?.values?.map((elem: IValues) => {
 							return (
 								<div
 									key={Math.random() + Math.random()}

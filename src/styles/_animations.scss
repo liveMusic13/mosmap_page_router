@@ -16,11 +16,19 @@
 @keyframes auth-label {
 	0% {
 		top: 20%;
+
+		@media (max-width: 991.98px) {
+			top: 30%;
+		}
 	}
 	100% {
 		top: 0%;
 		color: $color_two;
 		font-size: 0.7rem;
+
+		@media (max-width: 991.98px) {
+			font-size: 1.4rem;
+		}
 	}
 }
 
@@ -34,6 +42,30 @@
 		top: 20%;
 		color: $color_eight;
 		font-size: 1rem;
+	}
+}
+
+@keyframes auth-label_adaptive {
+	0% {
+		top: 30%;
+	}
+	100% {
+		top: -10%;
+		color: $color_two;
+		font-size: 1.2rem;
+	}
+}
+
+@keyframes auth-label-not-focus_adaptive {
+	0% {
+		top: -10%;
+		color: $color_two;
+		font-size: 1.2rem;
+	}
+	100% {
+		color: $color_eight;
+		top: 30%;
+		font-size: 1.8rem;
 	}
 }
 

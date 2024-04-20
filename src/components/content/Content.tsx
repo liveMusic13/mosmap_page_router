@@ -8,6 +8,7 @@ import { actions as viewSettingsAction } from '@/store/view-settings/viewSetting
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 import { IMarker } from '@/types/slice.types';
+import ConfirmPopup from '../ui/confirm-popup/ConfirmPopup';
 import styles from './Content.module.scss';
 import { AllObjects } from './all-objects/AllObjects';
 import Filters from './filters/Filters';
@@ -41,7 +42,8 @@ export function Content({data}:any) {
 
 	return (
 		<div className={styles.wrapper}>
-			{viewSettings.editingObjects.isActiveAddButton && <AddAndEditObject/>}
+			{(viewSettings.editingObjects.isViewPopup.isObject || viewSettings.editingObjects.isViewPopup.isMarker) && <ConfirmPopup/>}
+			{(viewSettings.editingObjects.isActiveAddButton || viewSettings.editingObjects.isActiveEditButton) && <AddAndEditObject/>}
 			{viewSettings.isViewFilters && <Filters />}
 			{viewSettings.isObjectInfo && <ObjectInfo isDisplay={isDisplay} />}
 			{viewSettings.isViewObjects &&

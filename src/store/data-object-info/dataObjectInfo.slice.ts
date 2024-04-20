@@ -26,6 +26,7 @@ export const dataObjectInfo = createSlice({
 		},
 		deleteCrd: (state, {payload})=> {
 			state.crd = null
+			state.area = []
 		}
 	},
 });
