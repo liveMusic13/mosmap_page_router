@@ -72,10 +72,24 @@ body {
 	@media (max-width: 767.98px) {
 		font-size: 14px;
 	}
+
+	@media (max-width: 479.98px) {
+		font-size: 10px;
+	}
 }
 
 #__next {
 	height: 100vh;
+}
+
+.background__opacity{
+  position: absolute;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba($color: #000000, $alpha: .4);
 }
 
 .wrapper_auth {
@@ -94,6 +108,11 @@ body {
 		justify-content: space-between;
 		font-size: 1rem;
 
+		@media (max-width: 991.98px) {
+			width: 80%;
+			height: 80%;
+		}
+
 		>.title__auth {
 			height: adapt(48.8px, 1440px);
 			width: 100%;
@@ -103,6 +122,11 @@ body {
 			font-weight: 600;
 			padding: adapt(12px, 1440px) adapt(12px, 1440px) 0px;
 			border-bottom: 1px solid $color_seven;
+
+			@media (max-width: 991.98px) {
+				height: 15%;
+				font-size: 3rem;
+			}
 		}
 
 		// >.form {
@@ -180,18 +204,32 @@ body {
 		// }
 
 		>.form {
+			@media (max-width: 991.98px) {
+				height: 85%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
 				>.block__input {
 					height: adapt(66.8px, 1440px);
-					margin-bottom: adapt(8px, 1440px);
+					margin-bottom: adapt(18px, 1440px);
 					display: flex;
 					flex-direction: column;
 					position: relative;
+
+					@media (max-width: 991.98px) {
+						height: 25%;
+					}
 	
 					&:focus-within,
 					&.has-content {
 						.input__label_login,
 						.input__label_password {
 							animation: auth-label 1s ease 1 forwards;
+
+							@media (max-width: 991.98px) {
+								animation: auth-label_adaptive 1s ease 1 forwards;
+							}
 						}
 					}
 		
@@ -200,6 +238,10 @@ body {
 						margin-left: adapt(12px, 1440px);
 						position: absolute;
 						animation: auth-label-not-focus 1s ease 1 forwards;
+
+						@media (max-width: 991.98px) {
+							animation: auth-label-not-focus_adaptive 1s ease 1 forwards;
+						}
 					}
 					
 					>.input__login{
@@ -207,9 +249,13 @@ body {
 						border-bottom: 1px solid $color_eight;
 						height: 100%;
 						outline: none;
-	
+						
 						&:focus {
 							box-shadow: 0px 2px 2px $color_two;
+						}
+
+						@media (max-width: 991.98px) {
+							font-size: 4rem;
 						}
 					}
 			
@@ -218,6 +264,10 @@ body {
 						margin-left: adapt(12px, 1440px);
 						position: absolute;
 						animation: auth-label-not-focus 1s ease 1 forwards;
+
+						@media (max-width: 991.98px) {
+							animation: auth-label-not-focus_adaptive 1s ease 1 forwards;
+						}
 					}
 					
 					>.input__password{
@@ -228,6 +278,10 @@ body {
 	
 						&:focus {
 							box-shadow: 0px 2px 2px $color_two;
+						}
+
+						@media (max-width: 991.98px) {
+							font-size: 4rem;
 						}
 					}
 				}
@@ -241,12 +295,24 @@ body {
 					// box-shadow: 0px adapt(2px, 1440px) adapt(2px, 1440px) rgba($color: $color_eight, $alpha: .5);
 					color: $color_three;
 					animation: button-auth-reverse 0.8s ease 1 forwards;
+
+					@media (max-width: 991.98px) {
+						width: 98%;
+						height: 20%;
+						font-size: 2rem;
+						margin: adapt(45px, 1440px) adapt(12px, 1440px) adapt(8px, 1440px);
+					}
 		
 					&:hover {
 						cursor: pointer;
 						// background-color: $color_two_light;
 						// height: adapt(40px, 1440px);
 						animation: button-auth 0.8s ease 1 forwards;
+					}
+
+					&:disabled {
+						cursor: default;
+						background-color: rgba($color: $color_two, $alpha: .5) !important;
 					}
 				}
 			}
@@ -266,9 +332,17 @@ body {
 				}
 			}
 
-			>.button__register{}
+			>.button__register{
+				@media (max-width: 991.98px) {
+					font-size: 1.4rem;
+				}
+			}
 
-			>.button__restore-password{}
+			>.button__restore-password{
+				@media (max-width: 991.98px) {
+					font-size: 1.4rem;
+				}
+			}
 		}
 	}
 }

@@ -10,8 +10,13 @@ import useWindowDimensions from '@/hooks/useWindowDimensions';
 
 import { $axios } from '@/api';
 
+import { TOKEN } from '@/app.constants';
+import { useAuth } from '@/hooks/useAuth';
 import { actions as mapLayersAction } from '@/store/map-layers/mapLayers.slice';
 import { RootState } from '@/store/store';
+import { actions as userMapAction } from '@/store/user-map/userMap.slice';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import styles from './Button.module.scss';
 
 const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
@@ -19,8 +24,8 @@ const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
 	const [clickButton, setClickButton] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const { width } = useWindowDimensions();
-	// const {setIsAuth} = useAuth()
-	// const router = useRouter()
+	const {setIsAuth} = useAuth()
+	const router = useRouter()
 
 	const getObjectInfo = async (id: number) => {
 		if (width && width <= 767.98)
@@ -44,6 +49,16 @@ const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
 			className={styles.icon__button}
 			disabled={elem?.crd === null}
 			onClick={() => {
+				if (icon.id === 2) {
+					dispatch(viewSettingsAction.toogleIsSelectArea(''))
+					dispatch(mapLayersAction.clearPolygon(''))
+				}
+				if (icon.id === 8) {
+					Cookies.remove(TOKEN);
+					setIsAuth(false)
+					router.push('/auth')
+					dispatch(userMapAction.deleteAccessiblyMap(''));
+				}
 				if (width && width <= 767.98) {
 					if (icon.id === 6) {
 						dispatch(viewSettingsAction.toggleSettingsMap(''));
@@ -54,10 +69,10 @@ const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
 						dispatch(viewSettingsAction.toggleObjects(''));
 					}
 				} else {
-					if (icon.id === 2) {
-						dispatch(viewSettingsAction.toogleIsSelectArea(''))
-						dispatch(mapLayersAction.clearPolygon(''))
-					}
+					// if (icon.id === 2) {
+					// 	dispatch(viewSettingsAction.toogleIsSelectArea(''))
+					// 	dispatch(mapLayersAction.clearPolygon(''))
+					// }
 					if (icon.id === 6) dispatch(viewSettingsAction.toggleFilters(''));
 					if (icon.id === 7) dispatch(viewSettingsAction.toggleObjects(''));
 					// if (icon.id === 8) {

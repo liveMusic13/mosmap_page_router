@@ -16,6 +16,9 @@ export const useInitRequest = () => {
 	const adresFilterString = useSelector(
 		(state: RootState) => state.adresFilterString,
 	);
+	// const maps = useSelector(
+	// 	(state: RootState) => state.userMap.map,
+	// );
 	const dispatch = useDispatch();
 	const searchParams = useSearchParams();
 	const map = searchParams.get('map');
@@ -25,11 +28,13 @@ export const useInitRequest = () => {
 			dispatch(viewSettingsActions.activeLoading(''));
 			if (adresFilterString.srcRequest === '') {
 				const response = await $axios.get(`/api/get_objects.php?map=${map}`);
+				// const response = await $axios.get(`/api/get_objects.php?map=${maps}`);
 				dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
 			} else {
 				const response = await $axios.get(
 					`/api/get_objects.php${adresFilterString.srcRequest}`,
 				);
+				console.log('map', adresFilterString.srcRequest)
 				dispatch(dataObjectsInMapAction.addDataObjectsInMap(response.data));
 			}
 		} catch (error) {

@@ -22,6 +22,15 @@ export const dataObjectsInMap = createSlice({
 		addNewObject: (state, {payload}) => {
 			state.points.points.unshift(payload)
 		},
+		replacementNewObject: (state, {payload}) => {
+      // Найдем индекс объекта с заданным id
+      const index = state.points.points.findIndex((marker: any) => marker.id === payload.id);
+
+      if (index !== -1) {
+        // Если объект с таким id найден, заменим его на новый объект
+        state.points.points[index] = payload;
+      }
+		},
 		deleteNewObject: (state, {payload}) => {
 			state.points.points.shift()
 		},

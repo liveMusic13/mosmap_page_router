@@ -29,7 +29,7 @@ export const editObjectService = {
   },
   deleteObject: async (id:number) => {
     try {
-      const {data} = await $axiosAuth.get(`delete_object.php?id=${id}`)
+      const {data} = await $axiosAuth.get(`/api/delete_object.php?id=${id}`)
       return data
     } catch (error) {
       console.log(error);

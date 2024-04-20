@@ -17,7 +17,11 @@ const initialState: IViewSettings = {
 		isDeleteObject: false,
 		isDeleteMarker: false,
 		isActiveAddButton: false,
-		isActiveEditButton: false
+		isActiveEditButton: false,
+		isViewPopup: {
+			isObject: false,
+			isMarker: false,
+		},
 	}
 };
 
@@ -25,6 +29,33 @@ export const viewSettings = createSlice({
 	name: 'viewSettings',
 	initialState,
 	reducers: {
+		// toggleIsViewPopupObject: (state, { payload }) => {
+		// 	return { ...state,  editingObjects: {...state.editingObjects.isViewPopup, isViewPopup: {...state.editingObjects.isViewPopup, isObject: !state.editingObjects.isViewPopup.isObject} }};
+		// },
+		toggleIsViewPopupMarker: (state, { payload }) => {
+			return { 
+					...state,  
+					editingObjects: {
+							...state.editingObjects,
+							isViewPopup: {
+									...state.editingObjects.isViewPopup,
+									isMarker: !state.editingObjects.isViewPopup.isMarker
+							}
+					}
+			};
+		},
+		toggleIsViewPopupObject: (state, { payload }) => {
+			return { 
+					...state,  
+					editingObjects: {
+							...state.editingObjects,
+							isViewPopup: {
+									...state.editingObjects.isViewPopup,
+									isObject: !state.editingObjects.isViewPopup.isObject
+							}
+					}
+			};
+		},
 		toggleIsActiveEditButton: (state, { payload }) => {
 			return { ...state,  editingObjects: {...state.editingObjects, isActiveEditButton: !state.editingObjects.isActiveEditButton }};
 		},
@@ -60,6 +91,9 @@ export const viewSettings = createSlice({
 		},
 		toggleSettingsMap: (state, { payload }) => {
 			return { ...state, isSettingsMap: !state.isSettingsMap };
+		},
+		defaultSettingsMap: (state, { payload }) => {
+			return { ...state, isSettingsMap: false };
 		},
 		activeSettingsMap: (state, { payload }) => {
 			return { ...state, isSettingsMap: true };

@@ -18,7 +18,7 @@ export default function Home({data, dataFilters}:any) {
 	const adresFilterString = useSelector(
 		(state: RootState) => state.adresFilterString,
 	);
-	const { isSettingsMap } = useSelector(
+	const viewSettings = useSelector(
 		(state: RootState) => state.viewSettings,
 	);
 	const { width } = useWindowDimensions();
@@ -39,6 +39,7 @@ export default function Home({data, dataFilters}:any) {
 	}, [adresFilterString.srcRequest]);
 
 	useEffect(() => {
+		console.log(map)
 		if (!map) {
 			push(`?map=7`);
 		} else {
@@ -63,11 +64,12 @@ export default function Home({data, dataFilters}:any) {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
+			{(viewSettings.editingObjects.isViewPopup.isMarker || viewSettings.editingObjects.isViewPopup.isObject) && <div className='background__opacity'></div>}
 			<Header data={data}/>
 			<div style={{ height: '100%' }}>
-			<Content data={data} />
-			{isSettingsMap && <SettingsMap />}
-		</div>
+				<Content data={data} />
+				{viewSettings.isSettingsMap && <SettingsMap />}
+			</div>
 		</>
 	);
 }
