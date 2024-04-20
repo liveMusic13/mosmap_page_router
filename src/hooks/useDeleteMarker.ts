@@ -37,7 +37,7 @@ export const useDeleteMarker = () => {
       if (typeof query.map === 'string') {
   
         console.log(dataObjectInfo.crd)
-        const data = await editObjectService.saveFieldForAddObject(query.map, {...dataObjectInfo, crd: null})
+        const data = await editObjectService.saveFieldForAddObject(query.map, {...dataObjectInfo, crd: [null, null]})
         // const data = await editObjectService.saveFieldForAddObject(query.map, {id: dataObjectInfo.id, crd: [0,0], values:[]})
         // const data = await editObjectService.saveFieldForAddObject(query.map, {id: dataObjectInfo.id, crd: [0,0], values:dataObjectInfo.values})
         await dispatch(dataObjectsInMapAction.replacementNewObject(data))
