@@ -15,10 +15,11 @@ export const dataObjectInfo = createSlice({
 			return {};
 		},
 		updateField: (state, { payload }) => {
-			const { name, value } = payload;
+			const { name, value, id } = payload;
 			const fieldIndex = state.values.findIndex((field: any) => field.name === name);
 			if (fieldIndex !== -1) {
 				state.values[fieldIndex].value = value;
+				state.values[fieldIndex].id = String(id)
 			}
 		},
 		addCrd: (state, {payload})=> {

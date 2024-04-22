@@ -32,26 +32,50 @@ export const viewSettings = createSlice({
 		// toggleIsViewPopupObject: (state, { payload }) => {
 		// 	return { ...state,  editingObjects: {...state.editingObjects.isViewPopup, isViewPopup: {...state.editingObjects.isViewPopup, isObject: !state.editingObjects.isViewPopup.isObject} }};
 		// },
-		toggleIsViewPopupMarker: (state, { payload }) => {
+		activeIsViewPopupMarker: (state, { payload }) => {
 			return { 
 					...state,  
 					editingObjects: {
 							...state.editingObjects,
 							isViewPopup: {
 									...state.editingObjects.isViewPopup,
-									isMarker: !state.editingObjects.isViewPopup.isMarker
+									isMarker: true
 							}
 					}
 			};
 		},
-		toggleIsViewPopupObject: (state, { payload }) => {
+		activeIsViewPopupObject: (state, { payload }) => {
 			return { 
 					...state,  
 					editingObjects: {
 							...state.editingObjects,
 							isViewPopup: {
 									...state.editingObjects.isViewPopup,
-									isObject: !state.editingObjects.isViewPopup.isObject
+									isObject: true
+							}
+					}
+			};
+		},
+		defaultIsViewPopupMarker: (state, { payload }) => {
+			return { 
+					...state,  
+					editingObjects: {
+							...state.editingObjects,
+							isViewPopup: {
+									...state.editingObjects.isViewPopup,
+									isMarker: false
+							}
+					}
+			};
+		},
+		defaultIsViewPopupObject: (state, { payload }) => {
+			return { 
+					...state,  
+					editingObjects: {
+							...state.editingObjects,
+							isViewPopup: {
+									...state.editingObjects.isViewPopup,
+									isObject: false
 							}
 					}
 			};

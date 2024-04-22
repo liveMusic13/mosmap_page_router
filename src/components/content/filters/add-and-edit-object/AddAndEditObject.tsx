@@ -1,6 +1,7 @@
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 import { actions as dataObjectInfoAction } from '@/store/data-object-info/dataObjectInfo.slice';
 import { RootState } from '@/store/store';
+import { actions as viewSettingsAction } from '@/store/view-settings/viewSettings.slice';
 import { debounceCustom } from '@/utils/debounce';
 import { transformFieldForSelect } from '@/utils/transformFieldForSelect';
 import { FC, useEffect, useState } from 'react';
@@ -16,8 +17,8 @@ const AddAndEditObject: FC = () => {
   const dispatch = useDispatch()
   const { width } = useWindowDimensions();
   
-  const debouncedDispatch = debounceCustom((name, value) => {
-    dispatch(dataObjectInfoAction.updateField({ name, value }));
+  const debouncedDispatch = debounceCustom((name, value, id) => {
+    dispatch(dataObjectInfoAction.updateField({ name, value, id }));
   }, 500);
 
 const handleChange = (selectedOption:any, name:string, type:string) => {
@@ -25,7 +26,7 @@ const handleChange = (selectedOption:any, name:string, type:string) => {
   if (type === 'input') {
     debouncedDispatch(name, selectedOption);
   } else {
-    debouncedDispatch(name, selectedOption.label);
+    debouncedDispatch(name, selectedOption.label, selectedOption.value);
   }
 };
 
@@ -46,6 +47,7 @@ useEffect(() => {
     });
     setFormState(initialFormState);
   }
+  console.log(formState)
 }, [viewSettings.editingObjects.isActiveEditButton, dataObjectInfo?.values]);
 
 // useEffect(() => {
@@ -98,6 +100,13 @@ useEffect(() => {
 				<h2 className={styles.title}>Добавление объекта</h2>
 				<button
 					className={styles.button__close}
+          onClick={()=> {
+            if (viewSettings.editingObjects.isActiveAddButton) {
+              dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+            } else if (viewSettings.editingObjects.isActiveEditButton) {
+              dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+            }
+          }}
 				>
 					<span></span>
 				</button>
