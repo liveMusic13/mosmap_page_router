@@ -1,5 +1,5 @@
 import { $axiosAuth } from "@/api";
-import { TOKEN } from "@/app.constants";
+import { ACCESSIBLYMAP, TOKEN } from "@/app.constants";
 import { actions as userMapAction } from "@/store/user-map/userMap.slice";
 import Cookies from 'js-cookie';
 
@@ -13,6 +13,7 @@ export const authService = {
 
       if (data.access_token) {
 				Cookies.set(TOKEN, data.access_token);
+        Cookies.set(ACCESSIBLYMAP, data.user)
         dispatch(userMapAction.addNumMap(data.user));
         dispatch(userMapAction.addAccessiblyMap(data.user));
         await searchParams.set('map', data.user);

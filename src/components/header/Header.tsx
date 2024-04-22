@@ -4,7 +4,9 @@ import Button from '@/components/ui/button/Button';
 
 import { RootState } from '@/store/store';
 
+import { ACCESSIBLYMAP } from '@/app.constants';
 import { useAuth } from '@/hooks/useAuth';
+import Cookies from 'js-cookie';
 import ButtonEditing from '../ui/button-editing/ButtonEditing';
 import styles from './Header.module.scss';
 import { arrayEditingObjects, arrayNumIcons, arrayNumSettingIcons } from './icons.data';
@@ -17,15 +19,22 @@ export function Header({data}:any) {
 		(state: RootState) => state.userMap,
 	);
 	const {isAuth} = useAuth()
+	const searchParams = new URLSearchParams(window.location.search);
 	
 	const isEdit = accessiblyMap.some(elem => elem === map)
 
-	console.log('isEdit', isEdit)
+	const isEdit1 = Cookies.get(ACCESSIBLYMAP) === searchParams.get('map')
+	console.log('isEdit', isEdit1)
 
 	return (
 		<header className={styles.header}>
 			<div className={styles.map__buttons}>
-				{	(isAuth && isEdit) &&
+				{/* {	(isAuth && isEdit) &&
+					arrayEditingObjects.map(icon => {
+						return <ButtonEditing key={icon.id} icon={icon} />;
+					})
+				} */}
+					{	(isAuth && isEdit1) &&
 					arrayEditingObjects.map(icon => {
 						return <ButtonEditing key={icon.id} icon={icon} />;
 					})
