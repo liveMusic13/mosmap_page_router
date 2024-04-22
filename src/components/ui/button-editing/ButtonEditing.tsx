@@ -36,16 +36,19 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
   }, [dataObjectInfo, clickButton])
 
   useEffect(()=> {
-    if (!editingObjects.isActiveEditButton) {
-      setClickButton(false)
+    if (width && width <= 767.98) {
+      if (!editingObjects.isActiveEditButton) {
+        setClickButton(false)
+      }
+      // if (isSettingsMap) {
+        //   setClickButton(true)
+        //   console.log('ok', clickButton)
+        // } 
+      } else {
+        if (!editingObjects.isActiveAddButton) {
+          setClickButton(false)
+        } 
     }
-    if (editingObjects.isActiveAddButton) {
-      setClickButton(false)
-    } 
-    // if (isSettingsMap) {
-    //   setClickButton(true)
-    //   console.log('ok', clickButton)
-    // } 
   },[editingObjects.isActiveAddButton, editingObjects.isActiveEditButton])
 
   return (
