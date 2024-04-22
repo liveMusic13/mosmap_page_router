@@ -91,10 +91,10 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
               // }
             }
             if (icon.id === 11) {
-              dispatch(viewSettingsAction.toggleIsViewPopupObject(''))
+              dispatch(viewSettingsAction.activeIsViewPopupObject(''))
             }
             if (icon.id === 12) {
-              dispatch(viewSettingsAction.toggleIsViewPopupMarker(''))
+              dispatch(viewSettingsAction.activeIsViewPopupMarker(''))
             }
             // if (width && width >= 767.98 && icon.id === 11) {
             //   dispatch(viewSettingsAction.toggleIsViewPopupObject(''))
