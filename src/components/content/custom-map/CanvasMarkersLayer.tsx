@@ -163,6 +163,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 
 			let mapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
 				icon: icon,
+				draggable: true, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
 			}).addTo(map);
 			iconsRef.current.push(mapObject);
 
@@ -188,6 +189,11 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 
 			mapObject.on('click', getInfoObject(marker));
 			mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
+			mapObject.on('dragend', function (event) {
+				let marker = event.target;
+				let position = marker.getLatLng();
+				console.log(position);
+			});
 		}
 	}
 
