@@ -155,7 +155,7 @@ export function CustomMap() {
 				}}/>
 			</FeatureGroup>
 			}
-			
+			{/* <DraggableMarker/> */}
 		</MapContainer>
 	
 	);
