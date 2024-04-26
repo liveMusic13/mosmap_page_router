@@ -1,5 +1,7 @@
+import { useSaveObject } from '@/hooks/useSaveObject';
 import useWindowDimensions from '@/hooks/useWindowDimensions';
 import { actions as dataObjectInfoAction } from '@/store/data-object-info/dataObjectInfo.slice';
+import { actions as dataObjectsInMapAction } from '@/store/data-objects-in-map/dataObjectsInMap.slice';
 import { RootState } from '@/store/store';
 import { actions as viewSettingsAction } from '@/store/view-settings/viewSettings.slice';
 import { debounceCustom } from '@/utils/debounce';
@@ -16,6 +18,7 @@ const AddAndEditObject: FC = () => {
   const [formState, setFormState] = useState<any>({});
   const dispatch = useDispatch()
   const { width } = useWindowDimensions();
+  const {saveObject} = useSaveObject()
   
   const debouncedDispatch = debounceCustom((name, value, id) => {
     dispatch(dataObjectInfoAction.updateField({ name, value, id }));
@@ -95,14 +98,34 @@ useEffect(() => {
 	};
 
   return (
-    <div className={styles.block__filters} style={width && width <= 767.98 ? {marginTop:'calc(142 / 1440 * 100vw)'}:{}}>
+    // <div className={styles.block__filters} style={width && width <= 767.98 ? {marginTop:'calc(142 / 1440 * 100vw)'}:{}}>
+    <div className={styles.block__filters} style={{
+      ...(width && width <= 767.98 ? {marginTop:'calc(142 / 1440 * 100vw)'} : {}),
+      ...(viewSettings.editingObjects.isMobileEditCrd ? {zIndex: '-1'} : {})
+    }}>
+    
       <div className={styles.block__title}>
-				<h2 className={styles.title}>Добавление объекта</h2>
+				<h2 className={styles.title}>{viewSettings.editingObjects.isActiveEditButton ? 'Редактирование объекта' : viewSettings.editingObjects.isActiveAddButton ? 'Добавление объекта' : ''}</h2>
+        <button
+					className={styles.button__save}
+          onClick={()=> { 
+            if (viewSettings.editingObjects.isActiveAddButton) {
+              dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+              saveObject()
+            } else if (viewSettings.editingObjects.isActiveEditButton) {
+              dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+              saveObject()
+            }
+          }}
+				>
+					<img src="./images/icons/ok.svg" alt="ok" />
+				</button>
 				<button
 					className={styles.button__close}
           onClick={()=> {
             if (viewSettings.editingObjects.isActiveAddButton) {
               dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+              dispatch(dataObjectsInMapAction.deleteNewObject(''))
             } else if (viewSettings.editingObjects.isActiveEditButton) {
               dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
             }
@@ -146,6 +169,17 @@ useEffect(() => {
             }
           })
         }
+        <button className={styles.button__save_text} onClick={()=> {
+            if (width && width <= 767.98) dispatch(viewSettingsAction.toggleSettingsMap(''))
+
+            if (viewSettings.editingObjects.isActiveAddButton) {
+              dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+              saveObject()
+            } else if (viewSettings.editingObjects.isActiveEditButton) {
+              dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+              saveObject()
+            }
+          }}>Сохранить</button>
       </div> : <div className={styles.wrapper_block__filters}>
       {
           dataObjectInfo?.values?.map((field:any) => {
@@ -180,6 +214,17 @@ useEffect(() => {
             }
           })
         }
+        <button className={styles.button__save_text} onClick={()=> {
+            if (width && width <= 767.98) dispatch(viewSettingsAction.toggleSettingsMap(''))
+
+            if (viewSettings.editingObjects.isActiveAddButton) {
+              dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+              saveObject()
+            } else if (viewSettings.editingObjects.isActiveEditButton) {
+              dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+              saveObject()
+            }
+          }}>Сохранить</button>
       </div>
       }
     </div>

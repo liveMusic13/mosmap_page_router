@@ -141,7 +141,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 	const dataObjectInfo: IDataObjectInfo = useSelector(
 		(state: RootState) => state.dataObjectInfo,
 	);
-	const {isActiveEditButton} = useSelector(
+	const {isActiveEditButton, isMobileEditCrd} = useSelector(
 		(state: RootState) => state.viewSettings.editingObjects,
 	);
 
@@ -231,7 +231,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 							key={object.id}
 							position={object.crd}
 							icon={customMarkerIcon}
-							draggable={isActiveEditButton}
+							draggable={isActiveEditButton || isMobileEditCrd}
 							eventHandlers={{ ...eventHandlers, click: getObjectInfo }}
 						>
 							<Popup>{object.name}</Popup>
