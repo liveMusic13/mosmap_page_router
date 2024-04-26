@@ -79,3 +79,16 @@
 		}
 	}
 }
+
+
+.crd__button {
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+
+	.crd__marker {
+		width: adapt(100px, 1440px);
+		height: adapt(100px, 1440px);
+		border-radius: 50%;
+	}
+}

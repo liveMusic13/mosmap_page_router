@@ -22,6 +22,7 @@ const initialState: IViewSettings = {
 			isObject: false,
 			isMarker: false,
 		},
+		isMobileEditCrd: false,
 	}
 };
 
@@ -79,6 +80,9 @@ export const viewSettings = createSlice({
 							}
 					}
 			};
+		},
+		toggleIsMobileEditCrd: (state, { payload }) => {
+			return { ...state,  editingObjects: {...state.editingObjects, isMobileEditCrd: !state.editingObjects.isMobileEditCrd }};
 		},
 		toggleIsActiveEditButton: (state, { payload }) => {
 			return { ...state,  editingObjects: {...state.editingObjects, isActiveEditButton: !state.editingObjects.isActiveEditButton }};

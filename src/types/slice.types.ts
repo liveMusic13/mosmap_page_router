@@ -65,6 +65,7 @@ export interface IViewSettings {
 			isObject: boolean,
 			isMarker: boolean,
 		},
+		isMobileEditCrd: boolean,
 	}
 }
 
@@ -94,6 +95,7 @@ export interface IMarker {
 	polygon: number[][] | any;
 	name: string;
 	name_map: null | any;
+	values?: IValues[];
 }
 
 export interface IDataObjectsInMap {

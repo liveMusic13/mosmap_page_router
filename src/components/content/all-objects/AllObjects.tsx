@@ -166,7 +166,8 @@ console.log(mapLayers.arrayPolygons[mapLayers.indexTargetPolygon])
 								}
 								onClick={getInfoObject(elem)}
 							>
-								<p>{elem.name}</p>
+								{/* <p>{elem.name}</p> */}
+								<p>{elem.values ? elem.values[0].value : elem.name}</p>
 								<Button icon={mapIcon} newCenter={newCenter} elem={elem} />
 							</div>
 						);

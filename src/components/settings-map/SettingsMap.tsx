@@ -70,6 +70,24 @@ export function SettingsMap() {
 							</button>
 						</div>
 				}
+
+				{ (viewSettings.editingObjects.isActiveAddButton || viewSettings.editingObjects.isActiveEditButton) && <button
+					className={styles.button__save}
+          onClick={()=> {
+						if (width && width <= 767.98) dispatch(viewSettingsAction.toggleSettingsMap(''))
+
+            if (viewSettings.editingObjects.isActiveAddButton) {
+              dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
+              saveObject()
+            } else if (viewSettings.editingObjects.isActiveEditButton) {
+              dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+              saveObject()
+            }
+          }}
+				>
+					<img src="./images/icons/ok.svg" alt="ok" />
+				</button>}
+
 				<button
 					className={styles.settings__button}
 					style={(viewSettings.editingObjects.isActiveAddButton || viewSettings.editingObjects.isActiveEditButton) ? {marginTop: 'calc(102 / 1440 * 100vw)'}:{}}

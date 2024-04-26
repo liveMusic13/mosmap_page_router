@@ -36,7 +36,20 @@ export const dataObjectsInMap = createSlice({
 		},
 		deleteObjectById: (state, {payload}) => {
 			state.points.points = state.points.points.filter((marker:any) => marker.id !== payload)
+		},
+		updateCrdObjectById: (state, {payload}) => {
+			// Преобразование id из строки в число
+			const id = Number(payload.id);
+		
+			// Поиск индекса объекта с заданным id
+			const index = state.points.points.findIndex((marker: any) => marker.id === id);
+		
+			// Если объект найден, обновление его координат
+			if (index !== -1) {
+				state.points.points[index].crd = payload.crd;
+			}
 		}
+		
 	},
 });
 

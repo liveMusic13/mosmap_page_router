@@ -40,7 +40,7 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
       if (!editingObjects.isActiveEditButton) {
         setClickButton(false)
       }
-      // if (isSettingsMap) {
+        // if (isSettingsMap) {
         //   setClickButton(true)
         //   console.log('ok', clickButton)
         // } 
