@@ -53,11 +53,11 @@ export function Header({data}:any) {
 						return <ButtonEditing key={icon.id} icon={icon} />;
 					})
 				} */}
-				{arrayNumIcons.map(icon => {
+				{ arrayNumIcons.map(icon => {
 					return <Button key={icon.id} icon={icon} />;
 				})}
 				
-				{(width && width <= 767.98) && <button className={styles.crd__button} onClick={()=> {
+				{((isAuth && isEdit1) && (width && width <= 767.98)) && <button className={styles.crd__button} onClick={()=> {
 						if (viewSettings.editingObjects.isMobileEditCrd) {
 							dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
 							dispatch(viewSettingsAction.toggleIsMobileEditCrd(''))

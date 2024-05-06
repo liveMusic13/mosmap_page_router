@@ -42,9 +42,10 @@ export function SettingsMap() {
 					</div>
 			}
 				{
-					viewSettings.editingObjects.isActiveEditButton && 
+					(viewSettings.editingObjects.isActiveEditButton || viewSettings.isObjectInfo) && 
 						<div className={styles.block__buttons} datatype='dsds' style={viewSettings.editingObjects.isActiveEditButton ? {marginTop: 'calc(102 / 1440 * 100vw)'}:{}}>
 							<button className={styles.buttonEditing} onClick={()=> {
+								if (width && width <= 767.98 && viewSettings.isObjectInfo) dispatch(viewSettingsAction.defaultObjectInfo(''))
 								if (width && width <= 767.98 && editIcon.id === 10) {
 									dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
 									// dispatch(viewSettingsAction.toggleSettingsMap(''))
