@@ -398,91 +398,91 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 			let bounds = map.getBounds();
 			const zoomLevelForIcon = map.getZoom();
 
-	for (let marker of markersData) {
-		if (
-			(zoomLevelForIcon > 13 &&
-				zoomLevelForIcon < 16 &&
-				bounds.contains(marker.crd ? marker.crd : [0, 0])) ||
-			(zoomLevelForIcon > 15 && //HELP: СТАВЛЮ 15 ХОТЯ СРАБАТЫВАЕТ НА 16. СКОРЕЕ ВСЕГО ПОТОМУ ЧТО НЕПРАВИЛЬНО ОТРАБАТЫВАЕТ УРОВЕНЬ ЗУМА, ПОЭТОМУ ДЛЯ ПРАВИЛЬНОЙ РАБОТЫ МЕНЯЮ НА 15.
-				(!marker.polygon || marker.polygon.length === 0) &&
-				bounds.contains(marker.crd ? marker.crd : [0, 0]))
-		) {
-			let svg = getIconForMarker(marker); //HELP: ПОЛУЧАЕМ МАРКЕР
-			let encodedSvg = encodeURIComponent(svg); //HELP: КОНВЕРТИРУЕМ В ССЫЛКУ
-			let dataUrl = 'data:image/svg+xml,' + encodedSvg; //HELP: ДОБАВЛЯЕМ К НЕМУ DATA И ТЕПЕРЬ ЭТО ССЫЛКА НА КАРТИНКУ
+			for (let marker of markersData) {
+				if (
+					(zoomLevelForIcon > 13 &&
+						zoomLevelForIcon < 16 &&
+						bounds.contains(marker.crd ? marker.crd : [0, 0])) ||
+					(zoomLevelForIcon > 15 && //HELP: СТАВЛЮ 15 ХОТЯ СРАБАТЫВАЕТ НА 16. СКОРЕЕ ВСЕГО ПОТОМУ ЧТО НЕПРАВИЛЬНО ОТРАБАТЫВАЕТ УРОВЕНЬ ЗУМА, ПОЭТОМУ ДЛЯ ПРАВИЛЬНОЙ РАБОТЫ МЕНЯЮ НА 15.
+						(!marker.polygon || marker.polygon.length === 0) &&
+						bounds.contains(marker.crd ? marker.crd : [0, 0]))
+				) {
+					let svg = getIconForMarker(marker); //HELP: ПОЛУЧАЕМ МАРКЕР
+					let encodedSvg = encodeURIComponent(svg); //HELP: КОНВЕРТИРУЕМ В ССЫЛКУ
+					let dataUrl = 'data:image/svg+xml,' + encodedSvg; //HELP: ДОБАВЛЯЕМ К НЕМУ DATA И ТЕПЕРЬ ЭТО ССЫЛКА НА КАРТИНКУ
 
-			const icon = L.icon({
-				//HELP: СОЗДАЕМ ИКОНКУ
-				iconUrl: dataUrl,
-				iconSize: [20, 18],
-				iconAnchor: [10, 9],
-			});
+					const icon = L.icon({
+						//HELP: СОЗДАЕМ ИКОНКУ
+						iconUrl: dataUrl,
+						iconSize: [20, 18],
+						iconAnchor: [10, 9],
+					});
 
-			let mapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
-				icon: icon,
-				zIndexOffset: 3,
-				// draggable: isActiveEditButton, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
-			}).addTo(map);
-			// mapObject.options.title = marker.id ? String(marker.id) : ''
-			iconsRef.current.push(mapObject);
+					let mapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
+						icon: icon,
+						zIndexOffset: 3,
+						// draggable: isActiveEditButton, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
+					}).addTo(map);
+					// mapObject.options.title = marker.id ? String(marker.id) : ''
+					iconsRef.current.push(mapObject);
 
-			if (dataObjectInfo.id === marker.id) {
-				const targetIcon = L.icon({
-					iconUrl: '../images/icons/target.svg',
-					iconSize: [60, 58],
-					iconAnchor: [22, 21],
-				});
+					if (dataObjectInfo.id === marker.id) {
+						const targetIcon = L.icon({
+							iconUrl: '../images/icons/target.svg',
+							iconSize: [60, 58],
+							iconAnchor: [22, 21],
+						});
 
-				let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
-					icon: targetIcon,
-					draggable: isActiveEditButton || isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
-					zIndexOffset: 1
-				}).addTo(map);
-				targetMapObject.options.title = marker.id ? String(marker.id) : ''
-				iconsRef.current.push(targetMapObject);
+						let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
+							icon: targetIcon,
+							draggable: isActiveEditButton || isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
+							zIndexOffset: 1
+						}).addTo(map);
+						targetMapObject.options.title = marker.id ? String(marker.id) : ''
+						iconsRef.current.push(targetMapObject);
 
-				if (targetMarker.current) {
-					map.removeLayer(targetMarker.current);
-					targetMarker.current = null;
-				} else {
-					targetMarker.current = targetMapObject;
-				}
-				targetMapObject.on('dragend', function (event) {
-					const timeoutId = setTimeout(()=> {
-						const marker = event.target;
-						const position = marker.getLatLng();
-						console.log(position);
-	
-						if (marker != null) {
-							console.log(marker.getLatLng());
-							dispatch(dataObjectInfoAction.addCrd([marker.getLatLng().lat, marker.getLatLng().lng]))
-							dispatch(dataObjectsInMapAction.updateCrdObjectById({id: marker.options.title, crd: [marker.getLatLng().lat, marker.getLatLng().lng]}))
+						if (targetMarker.current) {
+							map.removeLayer(targetMarker.current);
+							targetMarker.current = null;
+						} else {
+							targetMarker.current = targetMapObject;
 						}
-					}, 700)
-	
-					return () => clearTimeout(timeoutId)
-				});
+						targetMapObject.on('dragend', function (event) {
+							const timeoutId = setTimeout(()=> {
+								const marker = event.target;
+								const position = marker.getLatLng();
+								console.log(position);
+			
+								if (marker != null) {
+									console.log(marker.getLatLng());
+									dispatch(dataObjectInfoAction.addCrd([marker.getLatLng().lat, marker.getLatLng().lng]))
+									dispatch(dataObjectsInMapAction.updateCrdObjectById({id: marker.options.title, crd: [marker.getLatLng().lat, marker.getLatLng().lng]}))
+								}
+							}, 700)
+			
+							return () => clearTimeout(timeoutId)
+						});
+					}
+				
+					mapObject.on('click', getInfoObject(marker));
+					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
+					// mapObject.on('dragend', function (event) {
+					// 	const timeoutId = setTimeout(()=> {
+					// 		const marker = event.target;
+					// 		const position = marker.getLatLng();
+					// 		console.log(position);
+
+					// 		if (marker != null) {
+					// 			console.log(marker.getLatLng());
+					// 			dispatch(dataObjectInfoAction.addCrd([marker.getLatLng().lat, marker.getLatLng().lng]))
+					// 			dispatch(dataObjectsInMapAction.updateCrdObjectById({id: marker.options.title, crd: [marker.getLatLng().lat, marker.getLatLng().lng]}))
+					// 		}
+					// 	}, 700)
+
+					// 	return () => clearTimeout(timeoutId)
+					// });
+				}
 			}
-		
-			mapObject.on('click', getInfoObject(marker));
-			mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
-			// mapObject.on('dragend', function (event) {
-			// 	const timeoutId = setTimeout(()=> {
-			// 		const marker = event.target;
-			// 		const position = marker.getLatLng();
-			// 		console.log(position);
-
-			// 		if (marker != null) {
-			// 			console.log(marker.getLatLng());
-			// 			dispatch(dataObjectInfoAction.addCrd([marker.getLatLng().lat, marker.getLatLng().lng]))
-			// 			dispatch(dataObjectsInMapAction.updateCrdObjectById({id: marker.options.title, crd: [marker.getLatLng().lat, marker.getLatLng().lng]}))
-			// 		}
-			// 	}, 700)
-
-			// 	return () => clearTimeout(timeoutId)
-			// });
-		}
-	}
 
 			setTimeout(() => {
 				if (map !== undefined) map.invalidateSize();

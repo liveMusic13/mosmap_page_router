@@ -17,6 +17,7 @@ import ZoomTracker from './ZoomTracker';
 
 import { actions as mapLayersAction } from '@/store/map-layers/mapLayers.slice';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import ClosePopup from './ClosePopup';
 import LocationMarker from './LocationMarker';
 
 export function CustomMap() {
@@ -155,6 +156,7 @@ export function CustomMap() {
 				}}/>
 			</FeatureGroup>
 			}
+			<ClosePopup/>
 		</MapContainer>
 	
 	);
