@@ -87,6 +87,9 @@ export const viewSettings = createSlice({
 		toggleIsActiveEditButton: (state, { payload }) => {
 			return { ...state,  editingObjects: {...state.editingObjects, isActiveEditButton: !state.editingObjects.isActiveEditButton }};
 		},
+		defaultIsActiveEditButton: (state, { payload }) => {
+			return { ...state,  editingObjects: {...state.editingObjects, isActiveEditButton: false }};
+		},
 		toggleIsActiveAddButton: (state, { payload }) => {
 			return { ...state,  editingObjects: {...state.editingObjects, isActiveAddButton: !state.editingObjects.isActiveAddButton }};
 		},

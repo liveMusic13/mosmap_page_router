@@ -46,6 +46,7 @@ export const AllObjects: FC = () => {
 		//HELP: ЗАПРОС НА ПОЛУЧЕНИЕ ИНФОРМАЦИИ ОБ ОБЪЕКТЕ
 		if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
 		if (isMobile) dispatch(viewSettingsAction.defaultObjects(''));
+		if (viewSettings.editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 		dispatch(viewSettingsAction.toggleObjectInfo(''));
 
 		try {

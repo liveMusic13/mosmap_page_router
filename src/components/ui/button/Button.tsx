@@ -30,7 +30,7 @@ const Button: FC<IButton> = ({ icon, newCenter, elem }) => {
 	const getObjectInfo = async (id: number) => {
 		if (width && width <= 767.98)
 			dispatch(viewSettingsAction.defaultObjects(''));
-		dispatch(viewSettingsAction.toggleObjectInfo(''));
+			dispatch(viewSettingsAction.toggleObjectInfo(''));
 		try {
 			dispatch(viewSettingsAction.activeLoadingObject(''));
 

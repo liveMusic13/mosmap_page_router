@@ -258,8 +258,8 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 	const dataObjectInfo: IDataObjectInfo = useSelector(
 		(state: RootState) => state.dataObjectInfo,
 	);
-	const {isActiveEditButton, isMobileEditCrd} = useSelector(
-		(state: RootState) => state.viewSettings.editingObjects,
+	const {editingObjects} = useSelector(
+		(state: RootState) => state.viewSettings,
 	);
 	const map = useMap();
 	const dispatch = useDispatch();
@@ -274,6 +274,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 		//HELP: ЗАПРОС НА ПОЛУЧЕНИЕ ИНФОРМАЦИИ ОБ ОБЪЕКТЕ
 		if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
 
+		if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 		dispatch(viewSettingsAction.toggleObjectInfo(''));
 		try {
 			dispatch(viewSettingsAction.activeLoadingObject(''));
@@ -365,7 +366,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 	
 					let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
 						icon: targetIcon,
-						draggable: isActiveEditButton || isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
+						draggable: editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
 					}).addTo(map);
 					targetMapObject.options.title = marker.id ? String(marker.id) : ''
 					iconsRef.current.push(targetMapObject);
@@ -435,7 +436,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 
 						let targetMapObject = L.marker(marker.crd ? marker.crd : [0, 0], {
 							icon: targetIcon,
-							draggable: isActiveEditButton || isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
+							draggable: editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd, // Добавьте эту строку, чтобы сделать маркер перетаскиваемым
 							zIndexOffset: 1
 						}).addTo(map);
 						targetMapObject.options.title = marker.id ? String(marker.id) : ''

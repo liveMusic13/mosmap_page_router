@@ -141,8 +141,8 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 	const dataObjectInfo: IDataObjectInfo = useSelector(
 		(state: RootState) => state.dataObjectInfo,
 	);
-	const {isActiveEditButton, isMobileEditCrd} = useSelector(
-		(state: RootState) => state.viewSettings.editingObjects,
+	const {editingObjects} = useSelector(
+		(state: RootState) => state.viewSettings,
 	);
 
 	useEffect(() => {}, [dataObjectInfo.id]);
@@ -171,6 +171,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 				if (object && object.crd) {
 					const getObjectInfo = async () => {
 						if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
+						if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 						dispatch(viewSettingsAction.toggleObjectInfo(''));
 
 						try {
@@ -231,7 +232,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 							key={object.id}
 							position={object.crd}
 							icon={customMarkerIcon}
-							draggable={isActiveEditButton || isMobileEditCrd}
+							draggable={editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd}
 							eventHandlers={{ ...eventHandlers, click: getObjectInfo }}
 						>
 							<Popup>{object.name}</Popup>
