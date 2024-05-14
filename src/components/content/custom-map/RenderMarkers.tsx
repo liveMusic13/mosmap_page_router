@@ -205,7 +205,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 								eventHandlers={{ click: !editingObjects.isActiveEditButton ? getObjectInfo : undefined, }}
 								weight={dataObjectInfo.id === object.id ? 6 : 3}
 							>
-								<Popup>{object.name}</Popup>
+								{editingObjects.isActiveEditButton ? null : <Popup>{object.name}</Popup>}
 							</Polygon>
 						);
 					} else {
@@ -235,7 +235,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 							draggable={editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd}
 							eventHandlers={{ ...eventHandlers, click: !editingObjects.isActiveEditButton ? getObjectInfo : undefined }}
 						>
-							<Popup>{object.name}</Popup>
+							{editingObjects.isActiveEditButton ? null : <Popup>{object.name}</Popup>}
 						</Marker>
 					);
 				}
