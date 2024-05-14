@@ -274,7 +274,7 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 		//HELP: ЗАПРОС НА ПОЛУЧЕНИЕ ИНФОРМАЦИИ ОБ ОБЪЕКТЕ
 		if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
 
-		if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
+		// if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 		dispatch(viewSettingsAction.toggleObjectInfo(''));
 		try {
 			dispatch(viewSettingsAction.activeLoadingObject(''));
@@ -332,7 +332,10 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 						weight: dataObjectInfo.id === marker.id ? 6 : 3,
 					}).addTo(map);
 	
-					mapObject.on('click', getInfoObject(marker));
+					// mapObject.on('click', getInfoObject(marker));
+					if (!editingObjects.isActiveEditButton) {
+						mapObject.on('click', getInfoObject(marker));
+					}
 					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					polygonsRef.current.push(mapObject);
 				}
@@ -353,7 +356,10 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 								: ARGBtoHEX(marker.color ? marker.color : '000'),
 					}).addTo(map);
 
-					mapObject.on('click', getInfoObject(marker));
+					// mapObject.on('click', getInfoObject(marker));
+					if (!editingObjects.isActiveEditButton) {
+						mapObject.on('click', getInfoObject(marker));
+					}
 					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 				}
 	
@@ -465,7 +471,10 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 						});
 					}
 				
-					mapObject.on('click', getInfoObject(marker));
+					// mapObject.on('click', getInfoObject(marker));
+					if (!editingObjects.isActiveEditButton) {
+						mapObject.on('click', getInfoObject(marker));
+					}
 					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					// mapObject.on('dragend', function (event) {
 					// 	const timeoutId = setTimeout(()=> {

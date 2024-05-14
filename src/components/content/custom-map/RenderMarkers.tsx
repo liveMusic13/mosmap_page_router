@@ -171,7 +171,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 				if (object && object.crd) {
 					const getObjectInfo = async () => {
 						if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
-						if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
+						// if (editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 						dispatch(viewSettingsAction.toggleObjectInfo(''));
 
 						try {
@@ -202,7 +202,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 										? 'black'
 										: ARGBtoHEX(object.color ? object.color : '000')
 								}
-								eventHandlers={{ click: getObjectInfo }}
+								eventHandlers={{ click: !editingObjects.isActiveEditButton ? getObjectInfo : undefined, }}
 								weight={dataObjectInfo.id === object.id ? 6 : 3}
 							>
 								<Popup>{object.name}</Popup>
@@ -233,7 +233,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 							position={object.crd}
 							icon={customMarkerIcon}
 							draggable={editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd}
-							eventHandlers={{ ...eventHandlers, click: getObjectInfo }}
+							eventHandlers={{ ...eventHandlers, click: !editingObjects.isActiveEditButton ? getObjectInfo : undefined }}
 						>
 							<Popup>{object.name}</Popup>
 						</Marker>
