@@ -335,8 +335,8 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 					// mapObject.on('click', getInfoObject(marker));
 					if (!editingObjects.isActiveEditButton) {
 						mapObject.on('click', getInfoObject(marker));
+						mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					}
-					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					polygonsRef.current.push(mapObject);
 				}
 			}
@@ -359,8 +359,8 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 					// mapObject.on('click', getInfoObject(marker));
 					if (!editingObjects.isActiveEditButton) {
 						mapObject.on('click', getInfoObject(marker));
+						mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					}
-					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 				}
 	
 				if (dataObjectInfo.id === marker.id && zoomLevelsForCircle < 16) {
@@ -474,8 +474,8 @@ const CanvasMarkersLayer: FC<ICanvasMarkersLayer> = ({
 					// mapObject.on('click', getInfoObject(marker));
 					if (!editingObjects.isActiveEditButton) {
 						mapObject.on('click', getInfoObject(marker));
+						mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					}
-					mapObject.bindPopup(marker.name ? marker.name.toString() : 'No Name');
 					// mapObject.on('dragend', function (event) {
 					// 	const timeoutId = setTimeout(()=> {
 					// 		const marker = event.target;
