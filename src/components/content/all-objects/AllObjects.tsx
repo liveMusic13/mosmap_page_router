@@ -46,7 +46,7 @@ export const AllObjects: FC = () => {
 		//HELP: ЗАПРОС НА ПОЛУЧЕНИЕ ИНФОРМАЦИИ ОБ ОБЪЕКТЕ
 		if (isMobile) dispatch(viewSettingsAction.activeSettingsMap(''));
 		if (isMobile) dispatch(viewSettingsAction.defaultObjects(''));
-		if (viewSettings.editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
+		// if (viewSettings.editingObjects.isActiveEditButton) dispatch(viewSettingsAction.defaultIsActiveEditButton('')) //HELP: ЧТОБЫ ПРИ ПЕРЕКЛЮЧЕНИИ ОБЪЕКТОВ ВО ВРЕМЯ РЕДАКТИРОВАНИЯ, ОКНО РЕДАКТИРОВАНИЯ ЗАКРЫВАЛОСЬ
 		dispatch(viewSettingsAction.toggleObjectInfo(''));
 
 		try {
@@ -156,7 +156,8 @@ console.log(mapLayers.arrayPolygons[mapLayers.indexTargetPolygon])
 				) : (
 					objects.map((elem: IMarker, index: number) => {
 						return (
-							<div
+							<button
+								disabled={viewSettings.editingObjects.isActiveEditButton}
 								ref={objectRefs.current[index]}
 								key={elem.id}
 								className={styles.object}
@@ -170,7 +171,7 @@ console.log(mapLayers.arrayPolygons[mapLayers.indexTargetPolygon])
 								{/* <p>{elem.name}</p> */}
 								<p>{elem.values ? elem.values[0].value : elem.name}</p>
 								<Button icon={mapIcon} newCenter={newCenter} elem={elem} />
-							</div>
+							</button>
 						);
 					})
 				)}
