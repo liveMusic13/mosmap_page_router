@@ -25,7 +25,7 @@ export function Header({data}:any) {
 	const {map, accessiblyMap} = useSelector(
 		(state: RootState) => state.userMap,
 	);
-	const {saveObject} = useSaveObject()
+	const {saveObjectMobile} = useSaveObject()
 	const { width } = useWindowDimensions();
 	const {isAuth} = useAuth()
 	const searchParams = new URLSearchParams(window.location.search);
@@ -63,7 +63,8 @@ export function Header({data}:any) {
 							dispatch(viewSettingsAction.toggleIsMobileEditCrd(''))
 
 							const timeoutId = setTimeout(()=> {
-								saveObject()
+								// saveObject()
+								saveObjectMobile()
 							}, 1000)
 							return () => clearTimeout(timeoutId)
 						} else {

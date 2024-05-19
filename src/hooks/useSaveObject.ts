@@ -28,5 +28,15 @@ export const useSaveObject = () => {
     }
   }
 
-  return {saveObject}
+  const saveObjectMobile = async () => { //HELP: ДЛЯ ТОГО ЧТОБЫ В МОБИЛЬНОЙ ВЕРСИИ СРАБАТЫВАЛО СОХРАНЕНИЕ, Т.К. В ХЕДЕРЕ КОГДА ОТКЛЮЧАЕШЬ ТАРГЕТ, МЕНЯЕТСЯ НА НЕАКТИВНОЕ СОСТОЯНИЕ editingObjects.isActiveEditButton И СПУСТЯ СЕКУНДУ, КОГДА СРАБАТЫВАЕТ ЗАПРОС ПО ТАЙМАУТУ, ОТЫГРЫВАЕТ УСЛОВИЕ УДАЛЕНИЯ В saveObject. Поэтому сделана эта функция с 1 вариантом условия
+    if (typeof query.map === 'string') {
+      // const data = await editObjectService.saveFieldForAddObject(query.map, {crd: dataObjectInfo.crd, id: dataObjectInfo.id, values: dataObjectInfo.values})
+        const data = await editObjectService.saveFieldForAddObject(query.map, dataObjectInfo)
+        await dispatch(dataObjectsInMapAction.deleteNewObject(''))
+        // await dispatch(dataObjectInfoAction.addObjectInfo(data))
+        await dispatch(dataObjectsInMapAction.addNewObject(data))
+    }
+  }
+
+  return {saveObject, saveObjectMobile}
 }
