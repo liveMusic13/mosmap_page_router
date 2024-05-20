@@ -232,7 +232,7 @@ const RenderMarkers: FC<IRenderMarkers> = ({ isMobile, zoomLevel }) => {
 							key={object.id}
 							position={object.crd}
 							icon={customMarkerIcon}
-							draggable={editingObjects.isActiveEditButton || editingObjects.isMobileEditCrd}
+							draggable={(editingObjects.isActiveEditButton && dataObjectInfo.id === object.id) || (editingObjects.isMobileEditCrd && dataObjectInfo.id === object.id)}
 							eventHandlers={{ ...eventHandlers, click: !editingObjects.isActiveEditButton ? getObjectInfo : undefined }}
 						>
 							{editingObjects.isActiveEditButton ? null : <Popup>{object.name}</Popup>}

@@ -40,8 +40,22 @@ export function Content({data}:any) {
 		}
 	}, [width]);
 
+	useEffect(() => {
+		if (viewSettings.editingObjects.isActiveEditButton || viewSettings.editingObjects.isActiveAddButton) {
+			const elements = document.querySelectorAll('.leaflet-container.leaflet-touch.leaflet-retina.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom');
+			elements.forEach((element) => {
+				(element as HTMLDivElement).style.cursor = 'crosshair';
+			});
+		} else {
+			const elements = document.querySelectorAll('.leaflet-container.leaflet-touch.leaflet-retina.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom');
+			elements.forEach((element) => {
+				(element as HTMLDivElement).style.cursor = 'grab';
+			});
+		}
+	}, [viewSettings.editingObjects.isActiveEditButton, viewSettings.editingObjects.isActiveAddButton]);
+
 	return (
-		<div className={styles.wrapper}>
+		<div className={styles.wrapper } >
 			{(viewSettings.editingObjects.isViewPopup.isObject || viewSettings.editingObjects.isViewPopup.isMarker) && <ConfirmPopup/>}
 			{(viewSettings.editingObjects.isActiveAddButton || viewSettings.editingObjects.isActiveEditButton) && <AddAndEditObject/>}
 			{viewSettings.isViewFilters && <Filters />}

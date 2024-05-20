@@ -1,4 +1,5 @@
 import { actions as dataObjectInfoAction } from '@/store/data-object-info/dataObjectInfo.slice';
+import { actions as dataObjectsInMapAction } from '@/store/data-objects-in-map/dataObjectsInMap.slice';
 import { RootState } from '@/store/store';
 import { FC } from 'react';
 import { useMapEvents } from 'react-leaflet';
@@ -13,6 +14,7 @@ const LocationMarker: FC = () => {
         console.log(e.latlng); // Здесь вы получаете координаты клика
         // dispatch(dataObjectInfoAction.addCrd([parseFloat((e.latlng.lat).toString().substring(0, 7)), parseFloat((e.latlng.lng).toString().substring(0, 7))]))
         dispatch(dataObjectInfoAction.addCrd([e.latlng.lat, e.latlng.lng]))
+        dispatch(dataObjectsInMapAction.updateCrdObjectById({id: dataObjectInfo.id, crd: [e.latlng.lat, e.latlng.lng]}))
     },
 });
 

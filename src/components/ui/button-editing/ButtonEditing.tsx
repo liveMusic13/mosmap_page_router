@@ -10,6 +10,7 @@ import styles from './ButtonEditing.module.scss';
 
 const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
   const [clickButton, setClickButton] = useState<boolean>(false);
+  const [clickEditButton, setClickEditButton] = useState<boolean>(false);
   const {editingObjects, isSettingsMap} = useSelector((state:RootState)=> state.viewSettings)
   const dataObjectInfo = useSelector((state:RootState)=> state.dataObjectInfo)
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
       dispatch(viewSettingsAction.activeDeleteMarker(''))
       dispatch(viewSettingsAction.activeDeleteObject(''))
       dispatch(viewSettingsAction.activeEditObjects(''))
-    }  else {
+    } else {
       dispatch(viewSettingsAction.defaultDeleteMarker(''))
       dispatch(viewSettingsAction.defaultDeleteObject(''))
       dispatch(viewSettingsAction.defaultEditObjects(''))
@@ -38,7 +39,7 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
   useEffect(()=> {
     if (width && width <= 767.98) {
       if (!editingObjects.isActiveEditButton) {
-        setClickButton(false)
+        setClickEditButton(false)
       }
         // if (isSettingsMap) {
         //   setClickButton(true)
@@ -48,6 +49,11 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
         if (!editingObjects.isActiveAddButton) {
           setClickButton(false)
         } 
+        if (!editingObjects.isActiveEditButton) {
+          setClickEditButton(false)
+        } else {
+          setClickEditButton(true)
+        }
     }
   },[editingObjects.isActiveAddButton, editingObjects.isActiveEditButton])
 
@@ -55,6 +61,7 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
           <button className={styles.buttonEditing} disabled={checkDisabled} onClick={()=> {
             if (width && width >= 767.98 && icon.id === 9 || icon.id === 10 ) setClickButton(!clickButton);
             if (width && width <= 767.98 && icon.id === 9 || icon.id === 10 ) setClickButton(!clickButton);
+
             if (width && width >= 767.98 && icon.id === 9) {
               dispatch(viewSettingsAction.toggleIsActiveAddButton(''))
               if (!editingObjects.isActiveAddButton) { //HELP:СТАВЛЮ ОТРИЦАНИЕ, ПОТОМУ ЧТО НА МОМЕНТ ВЫПОЛНЕНИЯ УСЛОВИЯ, СОСТОЯНИЕ КНОПКИ НЕ УСПЕВАЕТ В РЕДАКСЕ ИЗМЕНИТСЯ И ПОЛУЧАЕТСЯ ЧТО РАБОТАЕТ НАОБОРОТ. ПОЭТОМУ СТАВЛЮ ТАК
@@ -75,6 +82,7 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
             }
             if (width && width >= 767.98 && icon.id === 10) {
               dispatch(viewSettingsAction.toggleIsActiveEditButton(''))
+            
               if(editingObjects.isActiveEditButton) {
                 saveObject()
               }
@@ -106,7 +114,8 @@ const ButtonEditing: FC<IButtonEditing> = ({icon}) => {
             //   dispatch(viewSettingsAction.toggleIsViewPopupMarker(''))
             // }
           }}>
-            <svg className={styles.icon_svg} style={clickButton ? {color: 'red'}: {color: '#26a69a'}}>
+            {/* <svg className={styles.icon_svg} style={clickButton ? {color: 'red'}: {color: '#26a69a'}}> */}
+            <svg className={styles.icon_svg} style={icon.id === 10 ? (clickEditButton ? {color: 'red'}: {color: '#26a69a'}) : (clickButton ? {color: 'red'}: {color: '#26a69a'})}>
               <use
                 xlinkHref={icon.src}
               ></use>
